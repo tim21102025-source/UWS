@@ -69,7 +69,11 @@
     }
 
     .btn-outline {
-        @apply border-2 border-brand-yellow text-brand-yellow hover:bg-brand-yellow hover:text-brand-dark focus:ring-brand-yellow;
+        @apply border-2 border-brand-yellow text-brand-yellow bg-transparent hover:bg-brand-yellow hover:text-brand-dark focus:ring-brand-yellow;
+    }
+
+    .btn-outline-light {
+        @apply border-2 border-white text-white bg-transparent hover:bg-white hover:text-brand-dark focus:ring-white dark:border-gray-300 dark:text-gray-200 dark:hover:bg-gray-100 dark:hover:text-brand-dark;
     }
 
     .container {
