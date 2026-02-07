@@ -8,6 +8,7 @@ interface Props {
   secondaryText?: string;
   secondaryLink?: string;
   variant?: 'default' | 'dark' | 'light';
+  bgImage?: string;
 }
 
 const {
@@ -17,7 +18,8 @@ const {
   ctaLink = '/calculator',
   secondaryText = 'Связаться с нами',
   secondaryLink = '/contacts',
-  variant = 'default'
+  variant = 'default',
+  bgImage = '/images/hero-bg.jpg'
 } = Astro.props;
 
 const bgClass = {
@@ -28,7 +30,18 @@ const bgClass = {
 ---
 
 <section class={`relative py-20 lg:py-32 ${bgClass}`}>
-  <div class="container">
+  {/* Background Image */}
+  {bgImage && (
+    <div class="absolute inset-0 z-0">
+      <img 
+        src={bgImage} 
+        alt=""
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-dark/80 to-brand-dark/60"></div>
+    </div>
+  )}
+  <div class="container relative z-10">
     <div class="max-w-3xl animate-slide-up">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">
         {title}

@@ -6,6 +6,7 @@ interface Service {
   price: string;
   icon: string;
   link: string;
+  image?: string;
 }
 
 interface Props {
@@ -24,42 +25,48 @@ const {
       description: 'Профессиональная установка пластиковых окон REHAU, KBE, WDS',
       price: 'от 2 800 ₴/м²',
       icon: 'window',
-      link: '/services/ustanovka-okon'
+      link: '/services/ustanovka-okon',
+      image: '/images/services/install.jpg'
     },
     {
       title: 'Ремонт окон',
       description: 'Ремонт и регулировка окон любой сложности',
       price: 'от 500 ₴',
       icon: 'tools',
-      link: '/services/remont-okon'
+      link: '/services/remont-vikon',
+      image: '/images/services/repair.jpg'
     },
     {
-      title: 'Балконы',
-      description: 'Остекление и отделка балконов под ключ',
-      price: 'от 12 000 ₴',
+      title: 'Балкони',
+      description: 'Остеклення та обробка балконів під ключ',
+      price: 'від 12 000 ₴',
       icon: 'balcony',
-      link: '/services/balkony'
+      link: '/services/balkony',
+      image: '/images/services/balkony.jpg'
     },
     {
       title: 'Москітні сітки',
-      description: 'Защита от насекомых и пыли',
-      price: 'от 800 ₴',
+      description: 'Захист від комах та пилу',
+      price: 'від 800 ₴',
       icon: 'mosquito',
-      link: '/services/moskitni-sitki'
+      link: '/services/moskitni-sitki',
+      image: '/images/services/moskitki.jpg'
     },
     {
-      title: 'Стеклопакеты',
-      description: 'Замена и установка стеклопакетов',
-      price: 'от 1 500 ₴',
+      title: 'Склопакети',
+      description: 'Заміна та встановлення склопакетів',
+      price: 'від 1 500 ₴',
       icon: 'glass',
-      link: '/services/stepklopaketi'
+      link: '/services/stepklopaketi',
+      image: '/images/services/glass.jpg'
     },
     {
       title: 'Доводчики',
-      description: 'Установка дверных доводчиков',
-      price: 'от 1 200 ₴',
+      description: 'Встановлення дверних доводчиків',
+      price: 'від 1 200 ₴',
       icon: 'door',
-      link: '/services/dovodchiki'
+      link: '/services/dovodchiki',
+      image: '/images/services/dovodyachi.jpg'
     }
   ],
   columns = 3
@@ -96,21 +103,30 @@ const iconMap: Record<string, string> = {
           href={service.link}
           class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-gray-800"
         >
-          <div class="h-48 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
-            <svg 
-              class="w-24 h-24 text-brand-yellow" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path 
-                stroke-linecap="round" 
-                stroke-linejoin="round" 
-                stroke-width="1.5" 
-                d={iconMap[service.icon]} 
+          <div class="h-48 bg-gradient-to-br from-brand-gray to-brand-dark relative overflow-hidden">
+            {service.image ? (
+              <img 
+                src={service.image} 
+                alt={service.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-            </svg>
+            ) : (
+              <svg 
+                class="w-24 h-24 text-brand-yellow" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="1.5" 
+                  d={iconMap[service.icon]} 
+                />
+              </svg>
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent"></div>
           </div>
           <div class="p-6">
             <h3 class="text-xl font-heading font-bold mb-2 group-hover:text-brand-yellow transition-colors dark:text-white">

@@ -6,6 +6,7 @@ interface Testimonial {
   rating: number;
   service: string;
   date?: string;
+  image?: string;
 }
 
 interface Props {
@@ -23,21 +24,48 @@ const {
       text: 'Заказывал установку окон в квартиру. Работали быстро и качественно. Окна REHAU, всё идеально. Бригада приехала вовремя, мусор за собой убрали. Рекомендую!',
       rating: 5,
       service: 'Установка окон',
-      date: 'Январь 2024'
+      date: 'Январь 2024',
+      image: '/images/testimonials/testimonials-1.jpg'
     },
     {
       name: 'Мария Коваленко',
       text: 'Остекляли балкон под ключ. Очень довольна результатом! Менеджер помог подобрать оптимальный вариант по бюджету. Работу выполнили за 2 дня, как и обещали.',
       rating: 5,
       service: 'Балконы',
-      date: 'Декабрь 2023'
+      date: 'Декабрь 2023',
+      image: '/images/testimonials/testimonials-2.jpg'
     },
     {
       name: 'Сергей Викторович',
       text: 'Ребята заменили стеклопакет в офисе. Работа выполнена профессионально, цена порадовала. Всё чётко по договору. Буду обращаться ещё.',
       rating: 5,
       service: 'Стеклопакеты',
-      date: 'Январь 2024'
+      date: 'Январь 2024',
+      image: '/images/testimonials/testimonials-3.jpg'
+    },
+    {
+      name: 'Ольга Дмитриева',
+      text: 'Заказывали остекление частного дома. Очень понравился подход к работе - всё замерили, рассчитали, предложили несколько вариантов. Качество на высоте!',
+      rating: 5,
+      service: 'Остекление дома',
+      date: 'Февраль 2024',
+      image: '/images/testimonials/testimonials-4.jpg'
+    },
+    {
+      name: 'Михаил Семёнов',
+      text: 'Установили новые двери на балкон. Работники вежливые, всё сделали аккуратно. Цена адекватная, без скрытых платежей.',
+      rating: 5,
+      service: 'Балконные двери',
+      date: 'Март 2024',
+      image: '/images/testimonials/testimonials-5.jpg'
+    },
+    {
+      name: 'Елена Николаева',
+      text: 'Осталась очень довольна москитными сетками! Приехали, всё замерили, через неделю уже установили. Качество отличное, рекомендую!',
+      rating: 5,
+      service: 'Москітні сітки',
+      date: 'Март 2024',
+      image: '/images/testimonials/testimonials-6.jpg'
     }
   ]
 } = Astro.props;
@@ -55,7 +83,15 @@ const {
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {testimonials.map((testimonial) => (
         <div class="bg-white rounded-xl p-6 shadow-lg dark:bg-gray-800">
-          <div class="flex items-center gap-1 mb-4">
+          <div class="flex items-center gap-4 mb-4">
+            {testimonial.image && (
+              <img 
+                src={testimonial.image} 
+                alt={testimonial.name}
+                class="w-12 h-12 rounded-full object-cover"
+              />
+            )}
+            <div>
             {Array.from({ length: 5 }).map((_, i) => (
               <svg 
                 class={`w-5 h-5 ${i < testimonial.rating ? 'text-brand-yellow' : 'text-gray-300'}`}

@@ -7,44 +7,47 @@ import Testimonials from '../components/blocks/Testimonials.astro';
 import CTA from '../components/blocks/CTA.astro';
 import ContactsMap from '../components/blocks/ContactsMap.astro';
 
-const pageTitle = 'О компании UWS - Профессиональная установка окон в Киеве';
-const pageDescription = 'UWS - лидер по установке окон в Киеве. Более 15 лет опыта, 5000+ довольных клиентов. Немецкие профили REHAU, KBE, WDS с гарантией 5 лет.';
+const pageTitle = 'Про компанію UWS - Професійне встановлення вікон у Києві';
+const pageDescription = 'UWS - лідер з встановлення вікон у Києві. Більше 15 років досвіту, 5000+ задоволених клієнтів. Німецькі профілі REHAU, KBE, WDS з гарантією 5 років.';
 
 // Company statistics
 const stats = [
-  { value: '15+', label: 'Лет опыта' },
-  { value: '5000+', label: 'Довольных клиентов' },
-  { value: '12000+', label: 'Установленных окон' },
-  { value: '5 лет', label: 'Официальной гарантии' }
+  { value: '15+', label: 'Років досвіду' },
+  { value: '5000+', label: 'Задоволених клієнтів' },
+  { value: '12000+', label: 'Встановлених вікон' },
+  { value: '5 років', label: 'Офіційної гарантії' }
 ];
 
 // Team members
 const team = [
   {
-    name: 'Алексей Смирнов',
-    position: 'Директор компании',
-    experience: '15 лет в оконной индустрии'
+    name: 'Олексій Смірнов',
+    position: 'Директор компанії',
+    experience: '15 років у віконній індустрії',
+    image: '/images/team/team-1.jpg'
   },
   {
-    name: 'Дмитрий Коваленко',
-    position: 'Технический директор',
-    experience: 'Сертифицированный инженер'
+    name: 'Дмитро Коваленко',
+    position: 'Технічний директор',
+    experience: 'Сертифікований інженер',
+    image: '/images/team/team-2.jpg'
   },
   {
-    name: 'Андрей Петров',
-    position: 'Руководитель монтажных бригад',
-    experience: '12 лет опыта монтажа'
+    name: 'Андрій Петров',
+    position: 'Керівник монтажних бригад',
+    experience: '12 років досвіду монтажу',
+    image: '/images/team/team-3.jpg'
   }
 ];
 
 // Partners
 const partners = [
-  { name: 'REHAU', description: 'Немецкий профиль премиум-класса' },
-  { name: 'KBE', description: 'Немецкие оконные системы' },
-  { name: 'WDS', description: 'Современные профильные системы' },
-  { name: 'Roto', description: 'Премиум фурнитура' },
-  { name: 'MACO', description: 'Австрийская фурнитура' },
-  { name: 'Siegenia', description: 'Немецкие доводчики' }
+  { name: 'REHAU', description: 'Німецький профіль преміум-класу' },
+  { name: 'KBE', description: 'Німецькі віконні системи' },
+  { name: 'WDS', description: 'Сучасні профільні системи' },
+  { name: 'Roto', description: 'Преміум фурнітура' },
+  { name: 'MACO', description: 'Австрійська фурнітура' },
+  { name: 'Siegenia', description: 'Німецькі доводчики' }
 ];
 ---
 
@@ -54,9 +57,9 @@ const partners = [
 >
   <!-- Hero Section -->
   <Hero
-    title="О компании UWS"
-    subtitle="Мы - лидер по установке окон в Киеве с более чем 15-летним опытом работы. Делаем качественные немецкие окна доступными для каждой семьи."
-    ctaText="Рассчитать стоимость"
+    title="Про компанію UWS"
+    subtitle="Ми - лідер з встановлення вікон у Києві з більш ніж 15-річним досвідом роботи. Робимо якісні німецькі вікна доступними для кожної сім'ї."
+    ctaText="Розрахувати вартість"
     ctaLink="/calculator"
     variant="dark"
   />
@@ -80,30 +83,34 @@ const partners = [
     <div class="container">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">Наша история</h2>
+          <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">Наша історія</h2>
           <div class="space-y-4 text-gray-600 dark:text-gray-400">
             <p>
-              Компания UWS была основана в 2008 году группой специалистов с многолетним опытом работы в оконной индустрии. 
-              Мы начинали с небольшой команды монтажников, но уже через год стали одним из лидеров рынка оконных конструкций в Киеве.
+              Компанія UWS була заснована у 2008 році групою фахівців з багаторічним досвідом роботи у віконній індустрії. 
+              Ми починали з невеликої команди монтажників, але вже через рік стали одним з лідерів ринку віконних конструкцій у Києві.
             </p>
             <p>
-              Наша миссия - сделать качественные немецкие окна доступными для каждой украинской семьи. 
-              Мы не экономим на материалах и всегда используем только сертифицированные профили и фурнитуру.
+              Наша місія - зробити якісні німецькі вікна доступними для кожної української сім'ї. 
+              Ми не економимо на матеріалах і завжди використовуємо тільки сертифіковані профілі та фурнітуру.
             </p>
             <p>
-              Сегодня UWS - это современная компания с собственным производством, 
-              квалифицированными монтажными бригадами и складом материалов. 
-              Мы обслуживаем более 500 клиентов в год и продолжаем расти.
+              Сьогодні UWS - це сучасна компанія з власним виробництвом, 
+              кваліфікованими монтажними бригадами та складом матеріалів. 
+              Ми обслуговуємо понад 500 клієнтів на рік і продовжуємо зростати.
             </p>
           </div>
         </div>
-        <div class="bg-gradient-to-br from-brand-gray to-brand-dark rounded-xl h-[400px] flex items-center justify-center">
-          <div class="text-center text-white p-8">
-            <svg class="w-24 h-24 mx-auto mb-4 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
-            <p class="text-xl font-bold">С 2008 года</p>
-            <p class="text-gray-300">надежный партнер вашего комфорта</p>
+        <div class="bg-gradient-to-br from-brand-gray to-brand-dark rounded-xl h-[400px] relative overflow-hidden">
+          <img 
+            src="/images/about-2.jpg" 
+            alt="Офіс UWS"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-brand-dark/50 flex items-center justify-center">
+            <div class="text-center text-white p-8">
+              <p class="text-xl font-bold">З 2008 року</p>
+              <p class="text-gray-300">надійний партнер вашого комфорту</p>
+            </div>
           </div>
         </div>
       </div>
@@ -112,8 +119,8 @@ const partners = [
 
   <!-- Features -->
   <Features
-    title="Наши преимущества"
-    subtitle="Почему клиенты выбирают UWS"
+    title="Наші переваги"
+    subtitle="Чому клієнти вибирають UWS"
     variant="icons"
     bgVariant="light"
   />
@@ -122,9 +129,9 @@ const partners = [
   <section class="section">
     <div class="container">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Наши партнёры</h2>
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Наші партнери</h2>
         <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
-          Мы работаем только с проверенными производителями оконных систем и фурнитуры
+          Ми працюємо тільки з перевіреними виробниками віконних систем та фурнітури
         </p>
       </div>
 
@@ -145,17 +152,25 @@ const partners = [
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Наша команда</h2>
         <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
-          Квалифицированные специалисты с многолетним опытом работы
+          Кваліфіковані спеціалісти з багаторічним досвідом роботи
         </p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
         {team.map((member) => (
           <div class="bg-white rounded-xl overflow-hidden shadow-lg dark:bg-gray-800">
-            <div class="h-64 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
-              <svg class="w-24 h-24 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+            <div class="h-64 bg-gradient-to-br from-brand-gray to-brand-dark relative overflow-hidden">
+              {member.image ? (
+                <img 
+                  src={member.image} 
+                  alt={member.name}
+                  class="w-full h-full object-cover"
+                />
+              ) : (
+                <svg class="w-24 h-24 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
             </div>
             <div class="p-6">
               <h3 class="text-xl font-heading font-bold mb-1 dark:text-white">{member.name}</h3>
@@ -170,22 +185,22 @@ const partners = [
 
   <!-- Testimonials -->
   <Testimonials
-    title="Отзывы о работе"
-    subtitle="Что говорят наши клиенты"
+    title="Відгуки про роботу"
+    subtitle="Що говорять наші клієнти"
   />
 
   <!-- CTA -->
   <CTA
-    title="Готовы заказать окна?"
-    subtitle="Оставьте заявку и получите бесплатный замер и консультацию специалиста"
-    ctaText="Оставить заявку"
+    title="Готові замовити вікна?"
+    subtitle="Залиште заявку та отримайте безкоштовний замір та консультацію фахівця"
+    ctaText="Залишити заявку"
     ctaLink="/contacts"
     variant="gradient"
   />
 
   <!-- Contacts Map -->
   <ContactsMap
-    title="Контакты"
+    title="Контакти"
     showMap={true}
   />
 </BaseLayout>

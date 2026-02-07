@@ -1,0 +1,216 @@
+---
+// src/pages/blog/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/blocks/Hero.astro';
+import CTA from '../../components/blocks/CTA.astro';
+
+const pageTitle = 'Блог об окнах - Советы и статьи от UWS';
+const pageDescription = 'Полезные статьи о выборе, установке и ремонте окон. Советы экспертов, обзоры материалов, рекомендации по уходу.';
+
+// Blog posts data
+const posts = [
+  {
+    slug: 'kak-vybrat-okna',
+    title: 'Как выбрать качественные окна для квартиры',
+    description: 'Полное руководство по выбору металлопластиковых окон: профиль, стеклопакет, фурнитура.',
+    image: null,
+    date: '2026-01-15',
+    author: 'UWS Team',
+    category: 'Выбор окон',
+    tags: ['окна', 'выбор', 'профиль', 'стеклопакет'],
+    featured: true
+  },
+  {
+    slug: 'chem-otlichaetsya-odnosloyny-steklopaket-ot-dvuhsloynogo',
+    title: 'Чем отличается однокамерный стеклопакет от двухкамерного',
+    description: 'Подробное сравнение стеклопакетов разных типов: теплоизоляция, шумоизоляция, цена.',
+    image: null,
+    date: '2026-01-10',
+    author: 'Алексей Смирнов',
+    category: 'Технологии',
+    tags: ['стеклопакет', 'теплоизоляция', 'шумоизоляция']
+  },
+  {
+    slug: 'kak-ukhazhivat-za-plastikovymi-oknami',
+    title: 'Как ухаживать за пластиковыми окнами',
+    description: 'Практические советы по уходу за окнами ПВХ: мойка, смазка фурнитуры, проверка уплотнителей.',
+    image: null,
+    date: '2026-01-05',
+    author: 'Дмитрий Коваленко',
+    category: 'Уход',
+    tags: ['уход', 'ПВХ', 'фурнитура', 'уплотнитель']
+  },
+  {
+    slug: 'rehau-ili-veka-chto-luchshe',
+    title: 'REHAU или Veka - что лучше выбрать',
+    description: 'Сравнение двух популярных производителей оконных профилей: особенности, преимущества, недостатки.',
+    image: null,
+    date: '2025-12-28',
+    author: 'UWS Team',
+    category: 'Сравнение',
+    tags: ['REHAU', 'Veka', 'профиль', 'сравнение']
+  },
+  {
+    slug: 'pochemu-duet-iz-okna',
+    title: 'Почему дует из окна и как это исправить',
+    description: 'Основные причины продувания окон: износ уплотнителя, неправильная регулировка, дефекты монтажа.',
+    image: null,
+    date: '2025-12-20',
+    author: 'Андрей Петров',
+    category: 'Ремонт',
+    tags: ['продувание', 'ремонт', 'уплотнитель', 'регулировка']
+  },
+  {
+    slug: 'ustanovka-okon-zimoy',
+    title: 'Можно ли устанавливать окна зимой',
+    description: 'Все за и против зимнего монтажа окон: технологии, материалы, особенности работы при низких температурах.',
+    image: null,
+    date: '2025-12-15',
+    author: 'UWS Team',
+    category: 'Монтаж',
+    tags: ['установка', 'зима', 'монтаж', 'технологии']
+  }
+];
+
+const categories = ['Все', 'Выбор окон', 'Технологии', 'Уход', 'Сравнение', 'Ремонт', 'Монтаж'];
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Hero
+    title="Блог об окнах"
+    subtitle="Полезные статьи, советы экспертов и рекомендации по выбору, установке и уходу за окнами"
+    variant="dark"
+  />
+
+  <!-- Blog Posts -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Статьи и советы</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
+          Узнайте больше об окнах из наших экспертных статей
+        </p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        {categories.map((category, index) => (
+          <button
+            class={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              index === 0 
+                ? 'bg-brand-yellow text-brand-dark' 
+                : 'bg-gray-100 text-gray-600 hover:bg-brand-yellow hover:text-brand-dark dark:bg-gray-700 dark:text-gray-300'
+            }`}
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <!-- Featured Post -->
+      <div class="mb-12">
+        {posts.filter(p => p.featured).map((post) => (
+          <a 
+            href={`/blog/${post.slug}`}
+            class="block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all group dark:bg-gray-800"
+          >
+            <div class="grid md:grid-cols-2">
+              <div class="h-64 md:h-auto bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
+                <svg class="w-24 h-24 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <div class="p-8">
+                <span class="inline-block px-3 py-1 text-xs font-medium bg-brand-yellow/20 text-brand-yellow rounded-full mb-3">
+                  {post.category}
+                </span>
+                <h3 class="text-2xl font-heading font-bold mb-3 group-hover:text-brand-yellow transition-colors dark:text-white">
+                  {post.title}
+                </h3>
+                <p class="text-gray-600 mb-4 dark:text-gray-400">{post.description}</p>
+                <div class="flex items-center gap-4 text-sm text-gray-500">
+                  <span>{formatDate(post.date)}</span>
+                  <span>{post.author}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Posts Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="posts-grid">
+        {posts.filter(p => !p.featured).map((post) => (
+          <a 
+            href={`/blog/${post.slug}`}
+            class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all group dark:bg-gray-800"
+          >
+            <div class="h-48 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
+              <svg class="w-16 h-16 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+            </div>
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 text-xs font-medium bg-brand-yellow/20 text-brand-yellow rounded-full mb-3">
+                {post.category}
+              </span>
+              <h3 class="text-xl font-heading font-bold mb-2 group-hover:text-brand-yellow transition-colors dark:text-white">
+                {post.title}
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-2 dark:text-gray-400">{post.description}</p>
+              <div class="flex items-center justify-between text-sm text-gray-500">
+                <span>{formatDate(post.date)}</span>
+                <span>{post.author}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTA
+    title="Остались вопросы?"
+    subtitle="Наши эксперты готовы ответить на любые вопросы об окнах"
+    ctaText="Задать вопрос"
+    ctaLink="/contacts"
+    showForm={true}
+  />
+</BaseLayout>
+
+<script>
+  // Simple category filter
+  const filterButtons = document.querySelectorAll('[data-category]');
+  const posts = document.querySelectorAll('[id="posts-grid"] > a');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+      
+      // Update active button
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-brand-yellow', 'text-brand-dark');
+        btn.classList.add('bg-gray-100', 'text-gray-600', 'dark:bg-gray-700', 'dark:text-gray-300');
+      });
+      button.classList.remove('bg-gray-100', 'text-gray-600', 'dark:bg-gray-700', 'dark:text-gray-300');
+      button.classList.add('bg-brand-yellow', 'text-brand-dark');
+
+      // Filter posts
+      posts.forEach(post => {
+        const postCategory = post.querySelector('span[class*="bg-brand-yellow"]')?.textContent;
+        if (category === 'Все' || postCategory === category) {
+          (post as HTMLElement).style.display = 'block';
+        } else {
+          (post as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
