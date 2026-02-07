@@ -20,6 +20,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
+const BASE_PATH = '/UWS';
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -59,9 +61,9 @@ const schema = {
       <div class="max-w-4xl mx-auto">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <a href="/" class="hover:text-brand-yellow">Главная</a>
+          <a href={BASE_PATH + '/'} class="hover:text-brand-yellow">Главная</a>
           <span>/</span>
-          <a href="/blog" class="hover:text-brand-yellow">Блог</a>
+          <a href={BASE_PATH + '/blog'} class="hover:text-brand-yellow">Блог</a>
           <span>/</span>
           <span class="text-gray-900 dark:text-white">{post.data.title}</span>
         </nav>
@@ -126,7 +128,7 @@ const schema = {
         <h2 class="text-xl font-heading font-bold mb-4 dark:text-white">Поделиться статьёй</h2>
         <div class="flex gap-3">
           <a 
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://uws.com.ua/blog/${post.slug}`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=https://uws.com.ua${BASE_PATH}/blog/${post.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors"
@@ -136,7 +138,7 @@ const schema = {
             </svg>
           </a>
           <a 
-            href={`https://t.me/share/url?url=https://uws.com.ua/blog/${post.slug}&text=${encodeURIComponent(post.data.title)}`}
+            href={`https://t.me/share/url?url=https://uws.com.ua${BASE_PATH}/blog/${post.slug}&text=${encodeURIComponent(post.data.title)}`}
             target="_blank"
             rel="noopener noreferrer"
             class="w-10 h-10 bg-blue-400 text-white rounded-lg flex items-center justify-center hover:bg-blue-500 transition-colors"
@@ -146,7 +148,7 @@ const schema = {
             </svg>
           </a>
           <a 
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=https://uws.com.ua/blog/${post.slug}`}
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=https://uws.com.ua${BASE_PATH}/blog/${post.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             class="w-10 h-10 bg-blue-700 text-white rounded-lg flex items-center justify-center hover:bg-blue-800 transition-colors"
@@ -170,7 +172,7 @@ const schema = {
           .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
           .slice(0, 3)
           .map(relatedPost => (
-            <a href={`/blog/${relatedPost.slug}`} class="group">
+            <a href={`${BASE_PATH}/blog/${relatedPost.slug}`} class="group">
               <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all dark:bg-gray-800">
                 {relatedPost.data.image && (
                   <div class="aspect-video overflow-hidden">
@@ -201,7 +203,7 @@ const schema = {
     title="Нужна консультация?"
     subtitle="Наши эксперты помогут выбрать оптимальное решение для ваших окон"
     ctaText="Получить консультацию"
-    ctaLink="/contacts"
+    ctaLink={BASE_PATH + '/contacts'}
   />
 
   <!-- Contacts -->

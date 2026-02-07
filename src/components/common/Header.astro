@@ -8,28 +8,35 @@ interface Props {
 
 const { currentPath = Astro.url.pathname } = Astro.props;
 
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
 const navigation = [
-  { name: 'Головна', href: '/' },
+  { name: 'Головна', href: BASE_PATH + '/' },
   { 
     name: 'Послуги', 
-    href: '/services',
+    href: BASE_PATH + '/services',
     children: [
-      { name: 'Вікна', href: '/services/ustanovka-okon' },
-      { name: 'Балкони', href: '/services/balkony' },
-      { name: 'Двері', href: '/services/dovodchiki' }
+      { name: 'Вікна', href: BASE_PATH + '/services/ustanovka-okon' },
+      { name: 'Балкони', href: BASE_PATH + '/services/balkony' },
+      { name: 'Двері', href: BASE_PATH + '/services/dovodchiki' }
     ]
   },
-  { name: 'Калькулятор', href: '/calculator' },
-  { name: 'Ціни', href: '/prices' },
-  { name: 'Блог', href: '/blog' },
-  { name: 'Контакти', href: '/contacts' },
+  { name: 'Калькулятор', href: BASE_PATH + '/calculator' },
+  { name: 'Ціни', href: BASE_PATH + '/prices' },
+  { name: 'Блог', href: BASE_PATH + '/blog' },
+  { name: 'Контакти', href: BASE_PATH + '/contacts' },
 ];
 
 const isActive = (href: string) => {
-  if (href === '/') {
-    return currentPath === '/';
+  // Normalize paths for comparison
+  const normalizedHref = href.replace(/\/$/, '');
+  const normalizedPath = currentPath.replace(/\/$/, '');
+  
+  if (href === BASE_PATH + '/') {
+    return normalizedPath === BASE_PATH || normalizedPath === '';
   }
-  return currentPath.startsWith(href);
+  return normalizedPath.startsWith(normalizedHref);
 };
 ---
 
@@ -37,7 +44,7 @@ const isActive = (href: string) => {
   <nav class="container" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2" aria-label="UWS Home">
+      <a href={BASE_PATH + '/'} class="flex items-center gap-2" aria-label="UWS Home">
         <span class="text-2xl font-heading font-bold text-brand-yellow">UWS</span>
       </a>
 
@@ -64,7 +71,7 @@ const isActive = (href: string) => {
                       <a 
                         href={child.href}
                         class="block px-4 py-2 text-sm text-brand-dark dark:text-white hover:text-brand-yellow dark:hover:text-brand-yellow hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                        aria-current={currentPath === child.href ? 'page' : undefined}
+                        aria-current={isActive(child.href) ? 'page' : undefined}
                       >
                         {child.name}
                       </a>
@@ -93,10 +100,10 @@ const isActive = (href: string) => {
         <!-- Language Switcher -->
         <div class="flex items-center gap-1">
           <a 
-            href="/uk" 
+            href={BASE_PATH + '/uk'} 
             class="px-2 py-1 text-sm font-medium rounded transition-colors"
             class:list={[
-              currentPath.startsWith('/uk') 
+              currentPath.startsWith(BASE_PATH + '/uk') 
                 ? 'text-brand-yellow' 
                 : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
             ]}
@@ -106,10 +113,10 @@ const isActive = (href: string) => {
           </a>
           <span class="text-gray-300 dark:text-gray-600">|</span>
           <a 
-            href="/ru" 
+            href={BASE_PATH + '/ru'} 
             class="px-2 py-1 text-sm font-medium rounded transition-colors"
             class:list={[
-              currentPath.startsWith('/ru') || !currentPath.startsWith('/uk')
+              currentPath.startsWith(BASE_PATH + '/ru') || !currentPath.startsWith(BASE_PATH + '/uk')
                 ? 'text-brand-yellow' 
                 : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
             ]}
@@ -123,7 +130,7 @@ const isActive = (href: string) => {
         <ThemeToggle />
 
         <!-- CTA Button -->
-        <a href="/contacts" class="btn btn-primary">
+        <a href={BASE_PATH + '/contacts'} class="btn btn-primary">
           Контакти
         </a>
       </div>
@@ -212,10 +219,10 @@ const isActive = (href: string) => {
           <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
             <div class="flex items-center justify-center gap-4">
               <a 
-                href="/uk"
+                href={BASE_PATH + '/uk'}
                 class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
                 class:list={[
-                  currentPath.startsWith('/uk') 
+                  currentPath.startsWith(BASE_PATH + '/uk') 
                     ? 'bg-brand-yellow text-brand-dark' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
                 ]}
@@ -224,10 +231,10 @@ const isActive = (href: string) => {
               </a>
               <span class="text-gray-300 dark:text-gray-600">|</span>
               <a 
-                href="/ru"
+                href={BASE_PATH + '/ru'}
                 class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
                 class:list={[
-                  currentPath.startsWith('/ru') || !currentPath.startsWith('/uk')
+                  currentPath.startsWith(BASE_PATH + '/ru') || !currentPath.startsWith(BASE_PATH + '/uk')
                     ? 'bg-brand-yellow text-brand-dark' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
                 ]}
@@ -239,7 +246,7 @@ const isActive = (href: string) => {
 
           <!-- CTA -->
           <div class="mt-6">
-            <a href="/contacts" class="btn btn-primary w-full">
+            <a href={BASE_PATH + '/contacts'} class="btn btn-primary w-full">
               Контакти
             </a>
           </div>

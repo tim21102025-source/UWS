@@ -1,6 +1,8 @@
 ---
 // src/pages/500.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const BASE_PATH = '/UWS';
 ---
 
 <BaseLayout 
@@ -37,7 +39,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </svg>
             Оновити сторінку
           </button>
-          <a href="/" class="btn btn-outline border-gray-300 dark:border-gray-600">
+          <a href={BASE_PATH + '/'} class="btn btn-outline border-gray-300 dark:border-gray-600">
             На головну
           </a>
         </div>
@@ -75,25 +77,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <nav aria-label="Popular pages">
             <ul class="flex flex-wrap items-center justify-center gap-4 text-sm">
               <li>
-                <a href="/services/windows" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                <a href={BASE_PATH + '/services/ustanovka-okon'} class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
                   Вікна
                 </a>
               </li>
               <li class="text-gray-300 dark:text-gray-600">|</li>
               <li>
-                <a href="/services/balcony" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                <a href={BASE_PATH + '/services/balkony'} class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
                   Балкони
                 </a>
               </li>
               <li class="text-gray-300 dark:text-gray-600">|</li>
               <li>
-                <a href="/calculator" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                <a href={BASE_PATH + '/calculator'} class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
                   Калькулятор
                 </a>
               </li>
               <li class="text-gray-300 dark:text-gray-600">|</li>
               <li>
-                <a href="/contacts" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                <a href={BASE_PATH + '/contacts'} class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
                   Контакти
                 </a>
               </li>

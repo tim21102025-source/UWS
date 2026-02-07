@@ -7,7 +7,8 @@ export default defineConfig({
     react(),
     tailwind(),
   ],
-  site: 'https://tim21102025-source.github.io',
+  site: 'https://tim21102025-source.github.io/UWS',
+  base: '/UWS',
   trailingSlash: 'always',
   build: {
     format: 'directory',

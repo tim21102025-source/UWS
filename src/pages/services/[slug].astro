@@ -21,6 +21,8 @@ export async function getStaticPaths() {
 const { service } = Astro.props;
 const { Content } = await service.render();
 
+const BASE_PATH = '/UWS';
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -47,9 +49,9 @@ const schema = {
     title={service.data.title}
     subtitle={service.data.description}
     ctaText="Рассчитать стоимость"
-    ctaLink="/calculator"
+    ctaLink={BASE_PATH + '/calculator'}
     secondaryText="Заказать звонок"
-    secondaryLink="/contacts"
+    secondaryLink={BASE_PATH + '/contacts'}
     variant="dark"
   />
 
@@ -61,7 +63,7 @@ const schema = {
           <p class="text-sm text-gray-500 mb-2">Стоимость услуги</p>
           <p class="text-4xl font-heading font-bold text-brand-yellow">{service.data.price}</p>
           <p class="text-gray-600 mt-2 dark:text-gray-400">Точная цена после замера</p>
-          <a href="/calculator" class="btn btn-primary w-full mt-4">
+          <a href={BASE_PATH + '/calculator'} class="btn btn-primary w-full mt-4">
             Рассчитать точную стоимость
           </a>
         </div>
@@ -149,7 +151,7 @@ const schema = {
     title={`Заказать ${service.data.title.toLowerCase()}`}
     subtitle="Оставьте заявку и получите бесплатный замер и консультацию"
     ctaText="Оставить заявку"
-    ctaLink="/contacts"
+    ctaLink={BASE_PATH + '/contacts'}
     showForm={true}
   />
 

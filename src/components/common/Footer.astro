@@ -2,25 +2,28 @@
 // src/components/common/Footer.astro
 const currentYear = new Date().getFullYear();
 
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
 const footerNavigation = {
   services: [
-    { name: 'Вікна', href: '/services/ustanovka-okon' },
-    { name: 'Балкони', href: '/services/balkony' },
-    { name: 'Двері', href: '/services/dovodchiki' },
-    { name: 'Москітні сітки', href: '/services/moskitni-sitki' },
-    { name: 'Ролетні системи', href: '/services/stepklopaketi' },
+    { name: 'Вікна', href: BASE_PATH + '/services/ustanovka-okon' },
+    { name: 'Балкони', href: BASE_PATH + '/services/balkony' },
+    { name: 'Двері', href: BASE_PATH + '/services/dovodchiki' },
+    { name: 'Москітні сітки', href: BASE_PATH + '/services/moskitni-sitki' },
+    { name: 'Ролетні системи', href: BASE_PATH + '/services/stepklopaketi' },
   ],
   company: [
-    { name: 'Про нас', href: '/about' },
-    { name: 'Наші роботи', href: '/portfolio' },
-    { name: 'Блог', href: '/blog' },
-    { name: 'Ціни', href: '/prices' },
+    { name: 'Про нас', href: BASE_PATH + '/about' },
+    { name: 'Наші роботи', href: BASE_PATH + '/portfolio' },
+    { name: 'Блог', href: BASE_PATH + '/blog' },
+    { name: 'Ціни', href: BASE_PATH + '/prices' },
   ],
   info: [
-    { name: 'Калькулятор', href: '/calculator' },
-    { name: 'Контакти', href: '/contacts' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Політика конфіденційності', href: '/privacy' },
+    { name: 'Калькулятор', href: BASE_PATH + '/calculator' },
+    { name: 'Контакти', href: BASE_PATH + '/contacts' },
+    { name: 'FAQ', href: BASE_PATH + '/faq' },
+    { name: 'Політика конфіденційності', href: BASE_PATH + '/privacy' },
   ],
 };
 
@@ -44,7 +47,7 @@ const socialLinks = {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
       <!-- Brand & About -->
       <div class="lg:col-span-2">
-        <a href="/" class="inline-block" aria-label="UWS Home">
+        <a href={BASE_PATH + '/'} class="inline-block" aria-label="UWS Home">
           <span class="text-3xl font-heading font-bold text-brand-yellow">UWS</span>
         </a>
         <p class="mt-4 text-gray-400 max-w-sm">
@@ -169,7 +172,7 @@ const socialLinks = {
           <ul class="flex items-center gap-6 text-sm">
             <li>
               <a 
-                href="/privacy"
+                href={BASE_PATH + '/privacy'}
                 class="text-gray-400 hover:text-brand-yellow transition-colors"
               >
                 Політика конфіденційності
@@ -177,7 +180,7 @@ const socialLinks = {
             </li>
             <li>
               <a 
-                href="/terms"
+                href={BASE_PATH + '/terms'}
                 class="text-gray-400 hover:text-brand-yellow transition-colors"
               >
                 Умови використання
