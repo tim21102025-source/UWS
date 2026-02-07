@@ -16,6 +16,9 @@ interface Props {
   columns?: 2 | 3 | 4;
 }
 
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
 const {
   title = 'Наши услуги',
   subtitle = 'Профессиональные услуги по установке и ремонту окон',
@@ -25,48 +28,48 @@ const {
       description: 'Профессиональная установка пластиковых окон REHAU, KBE, WDS',
       price: 'от 2 800 ₴/м²',
       icon: 'window',
-      link: '/services/ustanovka-okon',
-      image: '/images/services/install.jpg'
+      link: BASE_PATH + '/services/ustanovka-okon',
+      image: BASE_PATH + '/images/services/install.jpg'
     },
     {
       title: 'Ремонт окон',
       description: 'Ремонт и регулировка окон любой сложности',
       price: 'от 500 ₴',
       icon: 'tools',
-      link: '/services/remont-vikon',
-      image: '/images/services/repair.jpg'
+      link: BASE_PATH + '/services/remont-vikon',
+      image: BASE_PATH + '/images/services/repair.jpg'
     },
     {
       title: 'Балкони',
       description: 'Остеклення та обробка балконів під ключ',
       price: 'від 12 000 ₴',
       icon: 'balcony',
-      link: '/services/balkony',
-      image: '/images/services/balkony.jpg'
+      link: BASE_PATH + '/services/balkony',
+      image: BASE_PATH + '/images/services/balkony.jpg'
     },
     {
       title: 'Москітні сітки',
       description: 'Захист від комах та пилу',
       price: 'від 800 ₴',
       icon: 'mosquito',
-      link: '/services/moskitni-sitki',
-      image: '/images/services/moskitki.jpg'
+      link: BASE_PATH + '/services/moskitni-sitki',
+      image: BASE_PATH + '/images/services/moskitki.jpg'
     },
     {
       title: 'Склопакети',
       description: 'Заміна та встановлення склопакетів',
       price: 'від 1 500 ₴',
       icon: 'glass',
-      link: '/services/stepklopaketi',
-      image: '/images/services/glass.jpg'
+      link: BASE_PATH + '/services/stepklopaketi',
+      image: BASE_PATH + '/images/services/glass.jpg'
     },
     {
       title: 'Доводчики',
       description: 'Встановлення дверних доводчиків',
       price: 'від 1 200 ₴',
       icon: 'door',
-      link: '/services/dovodchiki',
-      image: '/images/services/dovodyachi.jpg'
+      link: BASE_PATH + '/services/dovodchiki',
+      image: BASE_PATH + '/images/services/dovodyachi.jpg'
     }
   ],
   columns = 3
@@ -108,6 +111,8 @@ const iconMap: Record<string, string> = {
               <img 
                 src={service.image} 
                 alt={service.title}
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             ) : (

@@ -11,15 +11,18 @@ interface Props {
   bgImage?: string;
 }
 
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
 const {
   title,
   subtitle,
   ctaText = 'Рассчитать стоимость',
-  ctaLink = '/calculator',
+  ctaLink = BASE_PATH + '/calculator',
   secondaryText = 'Связаться с нами',
-  secondaryLink = '/contacts',
+  secondaryLink = BASE_PATH + '/contacts',
   variant = 'default',
-  bgImage = '/images/hero-bg.jpg'
+  bgImage = BASE_PATH + '/images/hero-bg.jpg'
 } = Astro.props;
 
 const bgClass = {
@@ -36,6 +39,8 @@ const bgClass = {
       <img 
         src={bgImage} 
         alt=""
+        loading="lazy"
+        decoding="async"
         class="w-full h-full object-cover opacity-20"
       />
       <div class="absolute inset-0 bg-gradient-to-br from-brand-dark/80 to-brand-dark/60"></div>

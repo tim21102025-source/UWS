@@ -1,0 +1,194 @@
+---
+// src/pages/diagnostics.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/blocks/Hero.astro';
+import CTA from '../components/blocks/CTA.astro';
+import FAQ from '../components/blocks/FAQ.astro';
+
+const pageTitle = 'Діагностика вікон | UWS';
+const pageDescription: string = 'Професійна діагностика вікон та дверей у Києві. Виявлення проблем та рекомендації щодо ремонту. Безкоштовний виїзд інженера.';
+
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
+const diagnosticServices = [
+  {
+    title: 'Регулювання вікон',
+    description: 'Перевірка та налаштування фурнітури, усунення провисання стулки',
+    price: 'від 300 ₴',
+    icon: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'
+  },
+  {
+    title: 'Заміна ущільнювача',
+    description: 'Діагностика стану ущільнювача, заміна на новий',
+    price: 'від 150 ₴/м.пог',
+    icon: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z'
+  },
+  {
+    title: 'Ремонт фурнітури',
+    description: 'Заміна зламаних елементів, налаштування закривання',
+    price: 'від 400 ₴',
+    icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+  },
+  {
+    title: 'Заміна склопакету',
+    description: 'Діагностика пошкоджень, заміна скла будь-якого типу',
+    price: 'від 1 500 ₴',
+    icon: 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'
+  }
+];
+
+const problems = [
+  { icon: '🌬️', problem: 'Продуває з вікон', solution: 'Регулювання + заміна ущільнювача' },
+  { icon: '🔇', problem: 'Погано закривається', solution: 'Ремонт/заміна фурнітури' },
+  { icon: '💧', problem: 'Запотівають вікна', solution: 'Діагностика вентиляції, заміна склопакету' },
+  { icon: '🔧', problem: 'Стикають ручки', solution: 'Регулювання стулки, заміна ручки' },
+  { icon: '📏', problem: 'Провисає стулка', solution: 'Регулювання петель' },
+  { icon: '🪟', problem: 'Тріснуло скло', solution: 'Термінова заміна склопакету' }
+];
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Hero
+    title="Діагностика вікон"
+    subtitle="Професійна діагностика та ремонт вікон у Києві. Безкоштовний виїзд інженера для оцінки стану ваших вікон."
+    variant="dark"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="max-w-5xl mx-auto">
+        
+        <!-- Problems & Solutions -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-8 dark:text-white text-center">Поширені проблеми та рішення</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {problems.map((item) => (
+              <div class="bg-white p-4 rounded-xl shadow-lg dark:bg-gray-800">
+                <div class="text-3xl mb-3">{item.icon}</div>
+                <h3 class="font-bold mb-1 dark:text-white">{item.problem}</h3>
+                <p class="text-sm text-brand-yellow font-medium">{item.solution}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Diagnostic Services -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-8 dark:text-white text-center">Послуги діагностики</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            {diagnosticServices.map((service) => (
+              <div class="bg-white p-6 rounded-xl shadow-lg dark:bg-gray-800">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={service.icon} />
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">{service.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-3">{service.description}</p>
+                    <span class="text-brand-yellow font-bold">{service.price}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-8 dark:text-white text-center">Як ми проводимо діагностику</h2>
+          <div class="relative">
+            <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-brand-yellow/30 hidden md:block"></div>
+            <div class="space-y-6">
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-yellow text-brand-dark rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 z-10">
+                  1
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex-1 dark:bg-gray-800">
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Заявка</h3>
+                  <p class="text-gray-600 dark:text-gray-400">Ви телефонуєте або залишаєте заявку на сайті. Ми узгоджуємо зручний час для візиту інженера.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-yellow text-brand-dark rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 z-10">
+                  2
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex-1 dark:bg-gray-800">
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Виїзд інженера</h3>
+                  <p class="text-gray-600 dark:text-gray-400">Наш спеціаліст безкоштовно приїжджає, оглядає вікна та виявляє всі проблеми.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-yellow text-brand-dark rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 z-10">
+                  3
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex-1 dark:bg-gray-800">
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Кошторис</h3>
+                  <p class="text-gray-600 dark:text-gray-400">Ми складаємо детальний кошторис робіт та узгоджуємо його з вами перед початком ремонту.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-yellow text-brand-dark rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 z-10">
+                  4
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg flex-1 dark:bg-gray-800">
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Ремонт</h3>
+                  <p class="text-gray-600 dark:text-gray-400">Після вашої згоди виконуємо всі необхідні роботи. Зазвичай ремонт одного вікна займає 1-2 години.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+          <h2 class="text-3xl font-heading font-bold mb-4 dark:text-white">Потрібна діагностика?</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+            Залиште заявку — ми передзвонимо протягом 15 хвилин та узгоджимо час візиту.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href={`${BASE_PATH}/contacts`} class="btn btn-primary btn-lg">
+              Замовити діагностику
+            </a>
+            <a href={`tel:+380660575202`} class="btn btn-outline btn-lg">
+              Зателефонувати
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <FAQ
+    title="Питання щодо діагностики"
+    subtitle="Відповіді на часті питання"
+    faqs={[
+      {
+        question: "Скільки коштує діагностика?",
+        answer: "Діагностика вікон у Києві безкоштовна. Ви оплачуєте тільки вартість ремонтних робіт, якщо вони потрібні."
+      },
+      {
+        question: "Як швидко приїде інженер?",
+        answer: "Зазвичай ми можемо запропонувати зручний час протягом 1-2 днів після заявки. В термінових випадках — можемо приїхати навіть у день звернення."
+      },
+      {
+        question: "Чи потрібно бути вдома увесь день?",
+        answer: "Ні, діагностика одного вікна займає 15-30 хвилин. Ви можете узгодити зручний для вас час — навіть увечері або у вихідні."
+      }
+    ]}
+  />
+
+  <CTA
+    title="Проблеми з вікнами?"
+    subtitle="Наш інженер проведе безкоштовну діагностику та запропонує оптимальне рішення."
+    ctaText="Замовити консультацію"
+    ctaLink={`${BASE_PATH}/contacts`}
+    showForm={false}
+  />
+</BaseLayout>

@@ -3,28 +3,46 @@ interface Props {
   businessName?: string;
   description?: string;
   url?: string;
-  telephone?: string;
+  telephones?: string[];
+  email?: string;
   addressLocality?: string;
   addressRegion?: string;
   addressCountry?: string;
+  streetAddress?: string;
+  postalCode?: string;
   latitude?: number;
   longitude?: number;
   openingHours?: string[];
   priceRange?: string;
+  image?: string;
+  sameAs?: string[];
 }
 
 const {
   businessName = 'UWS — Встановлення та Ремонт Вікон Київ',
-  description = 'Профессиональна установка та ремонт вікон у Києві.',
+  description = 'Профессиональна установка та ремонт вікон у Києві. Німецькі профілі REHAU, KBE, WDS з гарантією 5 років.',
   url = 'https://uws.com.ua',
-  telephone = '+380660575202',
+  telephones = ['+380660575202', '+380989478772', '+380633664769'],
+  email = 'uws.kyiv@gmail.com',
   addressLocality = 'Київ',
   addressRegion = 'Київська область',
   addressCountry = 'UA',
+  streetAddress = '',
+  postalCode = '02000',
   latitude = 50.4501,
   longitude = 30.5234,
-  openingHours = ['Mo-Fr 09:00-18:00', 'Sa 10:00-14:00'],
-  priceRange = 'UAH 5000+',
+  openingHours = [
+    'Mo-Fr 09:00-19:00',
+    'Sa 10:00-17:00',
+    'Su 10:00-17:00'
+  ],
+  priceRange = 'UAH 500+',
+  image = '/images/logo.png',
+  sameAs = [
+    'https://www.facebook.com/uws.kyiv',
+    'https://www.instagram.com/uws_kyiv',
+    'https://t.me/uws_kyiv'
+  ],
 } = Astro.props;
 
 const schema = JSON.stringify({
@@ -33,11 +51,15 @@ const schema = JSON.stringify({
   name: businessName,
   description: description,
   url: url,
-  telephone: telephone,
+  telephone: telephones,
+  email: email,
+  image: image,
   address: {
     '@type': 'PostalAddress',
+    streetAddress: streetAddress,
     addressLocality: addressLocality,
     addressRegion: addressRegion,
+    postalCode: postalCode,
     addressCountry: addressCountry,
   },
   geo: {
@@ -45,6 +67,32 @@ const schema = JSON.stringify({
     latitude: latitude,
     longitude: longitude,
   },
+  openingHoursSpecification: openingHours.map((hours) => {
+    const [days, time] = hours.split(' ');
+    const [opens, closes] = time.split('-');
+    return {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: days.includes('-') 
+        ? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        : days === 'Mo' 
+          ? 'Monday' 
+          : days === 'Tu' 
+            ? 'Tuesday' 
+            : days === 'We' 
+              ? 'Wednesday' 
+              : days === 'Th' 
+                ? 'Thursday' 
+                : days === 'Fr' 
+                  ? 'Friday' 
+                  : days === 'Sa' 
+                    ? 'Saturday' 
+                    : 'Sunday',
+      opens: opens,
+      closes: closes,
+    };
+  }),
+  priceRange: priceRange,
+  paymentAccepted: 'Cash, Card, Transfer',
   areaServed: {
     '@type': 'GeoCircle',
     geoMidpoint: {
@@ -52,15 +100,16 @@ const schema = JSON.stringify({
       latitude: latitude,
       longitude: longitude,
     },
-    geoRadius: 50000,
+    geoRadius: '50000',
   },
-  openingHoursSpecification: openingHours.map((hours) => ({
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: hours.split(' ')[0],
-    opens: hours.split(' ')[1]?.split('-')[0],
-    closes: hours.split(' ')[1]?.split('-')[1],
-  })),
-  priceRange: priceRange,
+  sameAs: sameAs,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: telephones[0],
+    email: email,
+    contactType: 'customer service',
+    availableLanguage: ['Ukrainian', 'Russian'],
+  },
 }, null, 2);
 ---
 

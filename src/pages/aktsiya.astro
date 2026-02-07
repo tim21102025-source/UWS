@@ -1,0 +1,145 @@
+---
+// src/pages/aktsiya.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/blocks/Hero.astro';
+import CTA from '../components/blocks/CTA.astro';
+
+const pageTitle = 'Акції та знижки на вікна | UWS';
+const pageDescription = 'Актуальні акції та знижки на встановлення та ремонт вікон у Києві. Економте на заміні вікон разом з UWS.';
+
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
+const promotions = [
+  {
+    title: 'Знижка 15% на встановлення вікон',
+    description: 'При замовленні встановлення вікон у 2-х і більше кімнатах',
+    conditions: 'Дійсна до 31 березня 2026 року',
+    image: '/images/aktsiya-1.jpg',
+    color: 'bg-gradient-to-br from-yellow-400 to-orange-500'
+  },
+  {
+    title: 'Безкоштовна доставка',
+    description: 'При замовленні вікон від 15 000 грн',
+    conditions: 'Доставка по Києву та области',
+    image: '/images/aktsiya-2.jpg',
+    color: 'bg-gradient-to-br from-green-400 to-green-600'
+  },
+  {
+    title: 'Москітна сітка у подарунок',
+    description: 'При замовленні склопакетів',
+    conditions: 'Розмір до 1.5 м²',
+    image: '/images/vidnovlennya.png',
+    color: 'bg-gradient-to-br from-blue-400 to-blue-600'
+  }
+];
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Hero
+    title="Акції та знижки"
+    subtitle="Слідкуйте за нашими акціями та економте на встановленні та ремонті вікон. Ми регулярно пропонуємо вигідні умови для наших клієнтів."
+    variant="dark"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="max-w-5xl mx-auto">
+        
+        <!-- Active Promotions -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-8 dark:text-white text-center">Поточні акції</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {promotions.map((promo) => (
+              <div class="bg-white rounded-xl overflow-hidden shadow-lg dark:bg-gray-800">
+                <div class={`h-48 ${promo.color} flex items-center justify-center`}>
+                  <div class="text-white text-center p-6">
+                    <svg class="w-16 h-16 mx-auto mb-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-2xl font-bold">{promo.title}</span>
+                  </div>
+                </div>
+                <div class="p-6">
+                  <p class="text-gray-600 dark:text-gray-400 mb-4">{promo.description}</p>
+                  <div class="flex items-center gap-2 text-sm text-brand-yellow font-medium">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {promo.conditions}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Permanent Benefits -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-8 dark:text-white text-center">Постійні переваги</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center dark:bg-gray-800">
+              <div class="w-16 h-16 bg-brand-yellow/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="font-bold mb-2 dark:text-white">Безкоштовний замір</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Виїзд інженера у зручний для вас час</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center dark:bg-gray-800">
+              <div class="w-16 h-16 bg-brand-yellow/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="font-bold mb-2 dark:text-white">Гарантія 5 років</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Офіційна гарантія на всі роботи</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center dark:bg-gray-800">
+              <div class="w-16 h-16 bg-brand-yellow/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <h3 class="font-bold mb-2 dark:text-white">Розстрочка 0%</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">До 12 місяців без переплат</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center dark:bg-gray-800">
+              <div class="w-16 h-16 bg-brand-yellow/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                </svg>
+              </div>
+              <h3 class="font-bold mb-2 dark:text-white">Німецька якість</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Профілі REHAU, KBE, WDS</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+          <h2 class="text-3xl font-heading font-bold mb-4 dark:text-white">Не знаєте яку акцію обрати?</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+            Залиште заявку — наш менеджер підбере найвигіднішу пропозицію саме для вас!
+          </p>
+          <a href={`${BASE_PATH}/contacts`} class="btn btn-primary btn-lg">
+            Отримати консультацію
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Акція діє!"
+    subtitle="Замовте консультацію сьогодні та отримайте додаткову знижку 5% на перше замовлення."
+    ctaText="Залишити заявку"
+    ctaLink={`${BASE_PATH}/contacts`}
+    showForm={false}
+  />
+</BaseLayout>

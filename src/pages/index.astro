@@ -8,6 +8,9 @@ import Testimonials from '../components/blocks/Testimonials.astro';
 import CTA from '../components/blocks/CTA.astro';
 import FAQ from '../components/blocks/FAQ.astro';
 
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+
 const pageTitle = 'UWS - Профессиональная установка окон в Киеве';
 const pageDescription = 'Качественные немецкие профили REHAU, KBE, WDS с гарантией 5 лет. Более 5000 довольных клиентов в Киеве и области.';
 ---
@@ -20,9 +23,9 @@ const pageDescription = 'Качественные немецкие профил�
     title="Профессиональная установка окон"
     subtitle="Качественные немецкие профили Rehau, KBE, WDS с гарантией 5 лет. Более 5000 довольных клиентов в Киеве и области."
     ctaText="Рассчитать стоимость"
-    ctaLink="/calculator"
+    ctaLink={BASE_PATH + '/calculator'}
     secondaryText="Заказать звонок"
-    secondaryLink="/contacts"
+    secondaryLink={BASE_PATH + '/contacts'}
   />
 
   <Features
@@ -52,7 +55,7 @@ const pageDescription = 'Качественные немецкие профил�
     title="Не знаете какие окна выбрать?"
     subtitle="Оставьте заявку и наш инженер бесплатно приедет на замер, проконсультирует и поможет подобрать оптимальное решение под ваш бюджет."
     ctaText="Оставить заявку"
-    ctaLink="/contacts"
+    ctaLink={BASE_PATH + '/contacts'}
     showForm={true}
   />
 </BaseLayout>

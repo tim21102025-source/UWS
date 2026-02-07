@@ -1,0 +1,249 @@
+---
+// src/pages/conditions.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/blocks/Hero.astro';
+import CTA from '../components/blocks/CTA.astro';
+import FAQ from '../components/blocks/FAQ.astro';
+
+const pageTitle = 'Умови та гарантія | UWS';
+const pageDescription = 'Умови співпраці, гарантія на вікна та монтажні роботи. Офіційні умови договору від компанії UWS.';
+
+// Base path for GitHub Pages subdirectory
+const BASE_PATH = '/UWS';
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Hero
+    title="Умови та гарантія"
+    subtitle="Ми надаємо офіційну гарантію на всі види робіт та матеріали. Нижче ви можете ознайомитися з умовами співпраці."
+    variant="dark"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        
+        <!-- Warranty Terms -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-6 dark:text-white">Гарантійні умови</h2>
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-lg dark:bg-gray-800">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Гарантія 5 років</h3>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    Ми надаємо офіційну гарантію <strong>5 років</strong> на всі види монтажних робіт та встановлені конструкції. 
+                    Гарантія поширюється на профіль, фурнітуру, склопакети та ущільнювачі.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg dark:bg-gray-800">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Термін служби до 50 років</h3>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    Німецькі профілі REHAU та KBE мають термін служби <strong>до 50 років</strong>. 
+                    При правильній експлуатації та регулярному обслуговуванні вікна прослужать кільком поколінням.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg dark:bg-gray-800">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2 dark:text-white">Безкоштовне сервісне обслуговування</h3>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    Протягом першого року після встановлення ми пропонуємо <strong>безкоштовне сервісне обслуговування</strong>: 
+                    регулювання фурнітури, перевірка ущільнювачів, дрібні налаштування.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Terms -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-6 dark:text-white">Умови оплати</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-gray-50 rounded-xl p-6 dark:bg-gray-800">
+              <h3 class="text-xl font-bold mb-4 dark:text-white">Стандартна оплата</h3>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <span class="w-8 h-8 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark font-bold text-sm">1</span>
+                  <span class="dark:text-gray-300">50% — при укладанні договору</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="w-8 h-8 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark font-bold text-sm">2</span>
+                  <span class="dark:text-gray-300">50% — після завершення робіт</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6 dark:bg-gray-800">
+              <h3 class="text-xl font-bold mb-4 dark:text-white">Розстрочка</h3>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="dark:text-gray-300">0% переплати до 12 місяців</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="dark:text-gray-300">Без довідки про доходи</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="dark:text-gray-300">Оформлення за 15 хвилин</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- What is Included -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-6 dark:text-white">Що входить у вартість</h2>
+          <div class="bg-brand-yellow/10 border border-brand-yellow rounded-xl p-6">
+            <ul class="grid md:grid-cols-2 gap-3">
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Безкоштовний виїзд інженера-замірника
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Точний розрахунок вартості
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Виробництво вікон за 3-5 днів
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Доставка на об'єкт
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Демонтаж старих конструкцій
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Монтаж за німецькою технологією
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Герметизація та утеплення
+              </li>
+              <li class="flex items-center gap-2 dark:text-gray-300">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Вивезення сміття
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Guarantee Exclusions -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-heading font-bold mb-6 dark:text-white">Гарантія не поширюється</h2>
+          <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="dark:text-gray-300">Механічні пошкодження (удари, подряпини)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="dark:text-gray-300">Пошкодження внаслідок стихійних лих</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="dark:text-gray-300">Несанкціоновані самостійні ремонти</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="dark:text-gray-300">Порушення правил експлуатації</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <FAQ
+    title="Питання щодо умов"
+    subtitle="Відповіді на часті питання"
+    faqs={[
+      {
+        question: "Якщо виникла проблема з вікном, що робити?",
+        answer: "Зверніться до нас за номером телефону або через форму на сайті. Наш сервісний інженер приїде для діагностики протягом 1-2 днів. Якщо проблема гарантійна — усунемо її безкоштовно."
+      },
+      {
+        question: "Чи можна розірвати договір?",
+        answer: "До початку виробництва ви можете розірвати договір без штрафних санкцій. Після початку виробництва — передбачено компенсацію фактично понесених витрат."
+      },
+      {
+        question: "Що робити, якщо вікно продуває?",
+        answer: "Протягом першого року обслуговування ми безкоштовно відрегулюємо фурнітуру та перевіримо герметичність. Зверніться до нас — ми оперативно вирішимо проблему."
+      }
+    ]}
+  />
+
+  <CTA
+    title="Виникли питання?"
+    subtitle="Наш менеджер детально розповість про всі умови та допоможе обрати оптимальний варіант."
+    ctaText="Залишити заявку"
+    ctaLink={`${BASE_PATH}/contacts`}
+    showForm={false}
+  />
+</BaseLayout>

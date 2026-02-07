@@ -9,14 +9,26 @@ const pageDescription = 'Контактная информация компан�
 
 // Contact data
 const contacts = {
-  phone: '+38 (044) 123-45-67',
-  phoneFormatted: '044 123 45 67',
-  email: 'info@uws.com.ua',
-  address: 'вул. Прикладна 1, Київ, 02000',
+  phones: [
+    { number: '+380660575202', operator: 'Vodafone', formatted: '(066) 057-52-02' },
+    { number: '+380989478772', operator: 'Kyivstar', formatted: '(098) 947-87-72' },
+    { number: '+380633664769', operator: 'Lifecell', formatted: '(063) 366-47-69' }
+  ],
+  email: 'uws.kyiv@gmail.com',
+  address: 'Київ, Київська область',
   workingHours: {
-    weekdays: 'Пн-Пт: 9:00 - 18:00',
-    saturday: 'Сб: 10:00 - 14:00',
-    sunday: 'Нд: Вихідний'
+    weekdays: 'Пн-Пт: 09:00 - 19:00',
+    saturday: 'Сб: 10:00 - 17:00',
+    sunday: 'Нд: 10:00 - 17:00'
+  },
+  messengers: {
+    viber: '+380730705280',
+    telegram: '+380730705280',
+    whatsapp: '+380730705280'
+  },
+  social: {
+    facebook: 'https://www.facebook.com/uws.kyiv',
+    instagram: 'https://www.instagram.com/uws_kyiv'
   }
 };
 
@@ -46,20 +58,67 @@ const services = [
   <section class="section">
     <div class="container">
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <!-- Phone -->
-        <a 
-          href={`tel:${contacts.phone.replace(/\s/g, '')}`}
-          class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group dark:bg-gray-800"
-        >
-          <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-brand-yellow transition-colors">
-            <svg class="w-6 h-6 text-brand-yellow group-hover:text-brand-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Phones Dropdown -->
+        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all dark:bg-gray-800">
+          <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
           </div>
-          <h3 class="font-heading font-bold mb-2 dark:text-white">Телефон</h3>
-          <p class="text-brand-yellow font-medium">{contacts.phoneFormatted}</p>
-          <p class="text-gray-500 text-sm mt-1">Ежедневно с 9:00 до 20:00</p>
-        </a>
+          <h3 class="font-heading font-bold mb-3 dark:text-white">Телефоны</h3>
+          <div class="flex flex-col gap-2">
+            {contacts.phones.map((phone) => (
+              <a 
+                href={`tel:${phone.number}`}
+                class="text-brand-yellow font-medium hover:text-brand-dark transition-colors"
+              >
+                {phone.formatted}
+                <span class={`text-xs ml-2 px-2 py-0.5 rounded ${
+                  phone.operator === 'Vodafone' ? 'bg-red-100 text-red-600' : 
+                  phone.operator === 'Kyivstar' ? 'bg-green-100 text-green-600' : 
+                  'bg-purple-100 text-purple-600'
+                }`}>
+                  {phone.operator}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Messengers -->
+        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all dark:bg-gray-800">
+          <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold mb-3 dark:text-white">Мессенджеры</h3>
+          <div class="flex flex-wrap gap-2">
+            <a 
+              href={`viber://chat?number=${contacts.messengers.viber}`}
+              class="px-3 py-1.5 bg-purple-100 text-purple-600 rounded-lg text-sm hover:bg-purple-200 transition-colors"
+              title="Viber"
+            >
+              Viber
+            </a>
+            <a 
+              href={`https://t.me/${contacts.messengers.telegram.replace('+', '')}`}
+              target="_blank"
+              class="px-3 py-1.5 bg-blue-100 text-blue-600 rounded-lg text-sm hover:bg-blue-200 transition-colors"
+              title="Telegram"
+            >
+              Telegram
+            </a>
+            <a 
+              href={`https://wa.me/${contacts.messengers.whatsapp}`}
+              target="_blank"
+              class="px-3 py-1.5 bg-green-100 text-green-600 rounded-lg text-sm hover:bg-green-200 transition-colors"
+              title="WhatsApp"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
 
         <!-- Email -->
         <a 
@@ -76,19 +135,6 @@ const services = [
           <p class="text-gray-500 text-sm mt-1">Ответим в течение 2 часов</p>
         </a>
 
-        <!-- Address -->
-        <div class="bg-white rounded-xl p-6 shadow-lg dark:bg-gray-800">
-          <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          <h3 class="font-heading font-bold mb-2 dark:text-white">Адрес</h3>
-          <p class="text-brand-yellow font-medium">{contacts.address}</p>
-          <p class="text-gray-500 text-sm mt-1">Киев, Украина</p>
-        </div>
-
         <!-- Working Hours -->
         <div class="bg-white rounded-xl p-6 shadow-lg dark:bg-gray-800">
           <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4">
@@ -99,6 +145,7 @@ const services = [
           <h3 class="font-heading font-bold mb-2 dark:text-white">График работы</h3>
           <p class="text-brand-yellow font-medium">{contacts.workingHours.weekdays}</p>
           <p class="text-gray-500 text-sm mt-1">{contacts.workingHours.saturday}</p>
+          <p class="text-gray-500 text-sm">{contacts.workingHours.sunday}</p>
         </div>
       </div>
 
