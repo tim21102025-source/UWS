@@ -1,0 +1,118 @@
+---
+// src/components/blocks/ContactsMap.astro
+interface Props {
+  title?: string;
+  showMap?: boolean;
+  address?: string;
+  phone?: string;
+  email?: string;
+  workingHours?: string;
+}
+
+const {
+  title = 'Контакты',
+  showMap = true,
+  address = 'вул. Прикладна 1, Київ, 02000',
+  phone = '+38 (044) 123-45-67',
+  email = 'info@uws.com.ua',
+  workingHours = 'Пн-Пт: 9:00 - 18:00, Сб: 10:00 - 14:00'
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">{title}</h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Contact Info -->
+      <div class="space-y-8">
+        <div class="bg-white rounded-xl p-6 shadow-lg dark:bg-gray-800">
+          <h3 class="text-xl font-heading font-bold mb-4 dark:text-white">Контактная информация</h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Адрес</p>
+                <p class="font-medium dark:text-white">{address}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Телефон</p>
+                <a href={`tel:${phone.replace(/\s/g, '')}`} class="font-medium hover:text-brand-yellow transition-colors dark:text-white">
+                  {phone}
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Email</p>
+                <a href={`mailto:${email}`} class="font-medium hover:text-brand-yellow transition-colors dark:text-white">
+                  {email}
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 mb-1">График работы</p>
+                <p class="font-medium dark:text-white">{workingHours}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow-lg dark:bg-gray-800">
+          <h3 class="text-xl font-heading font-bold mb-4 dark:text-white">Схема проезда</h3>
+          <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <p><strong>От метро:</strong> 10 минут пешком от станции метро</p>
+            <p><strong>На автомобиле:</strong> Парковка возле офиса, бесплатно для клиентов</p>
+            <p><strong>Общественный транспорт:</strong> Маршрутки 1, 2, 3 до остановки "Прикладна"</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      {showMap && (
+        <div class="h-[400px] lg:h-auto bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.5!2d30.5!3d50.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI3JzAwLjAiTiAzMcKwMzAnMDAuMCJF!5e0!3m2!1suk!2sua!4v0000000000000!5m2!1suk!2sua"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Карта проезда"
+            class="w-full h-full min-h-[400px]"
+          ></iframe>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

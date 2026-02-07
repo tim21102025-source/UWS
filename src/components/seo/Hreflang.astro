@@ -1,0 +1,28 @@
+---
+interface Props {
+  currentPath: string;
+  defaultLocale?: string;
+  locales?: string[];
+}
+
+const { currentPath, defaultLocale = 'uk', locales = ['uk', 'ru'] } = Astro.props;
+
+const baseUrl = 'https://uws.com.ua';
+const hreflangLinks = locales.map((locale) => {
+  const href = locale === defaultLocale 
+    ? `${baseUrl}${currentPath}`
+    : `${baseUrl}/${locale}${currentPath}`;
+  return { lang: locale, href };
+});
+---
+
+{/* Default language */}
+<link rel="alternate" hreflang={defaultLocale} href={hreflangLinks.find(l => l.lang === defaultLocale)?.href} />
+
+{/* Other locales */}
+{hreflangLinks.filter(l => l.lang !== defaultLocale).map((link) => (
+  <link rel="alternate" hreflang={link.lang} href={link.href} />
+))}
+
+{/* x-default - fallback for users with unknown language preferences */}
+<link rel="alternate" hreflang="x-default" href={hreflangLinks.find(l => l.lang === defaultLocale)?.href} />

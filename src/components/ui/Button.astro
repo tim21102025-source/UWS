@@ -1,0 +1,110 @@
+---
+/**
+ * Button Component
+ * 
+ * Универсальная кнопка с多种 вариантами и размерами
+ * 
+ * @example
+ * <Button variant="primary" size="md">Нажми меня</Button>
+ * <Button variant="outline" disabled>Отключена</Button>
+ * <Button loading>Загрузка...</Button>
+ */
+
+interface Props {
+  /** Вариант стиля кнопки */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  /** Размер кнопки */
+  size?: 'sm' | 'md' | 'lg';
+  /** Тип кнопки */
+  type?: 'button' | 'submit' | 'reset';
+  /** Ссылка для кнопки-ссылки */
+  href?: string;
+  /** Отключенное состояние */
+  disabled?: boolean;
+  /** Состояние загрузки */
+  loading?: boolean;
+  /** Полная ширина */
+  fullWidth?: boolean;
+  /** Дополнительные классы */
+  class?: string;
+  /** Атрибуты для accessibility */
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  href,
+  disabled = false,
+  loading = false,
+  fullWidth = false,
+  class: className = '',
+  ariaLabel,
+} = Astro.props;
+
+// Варианты стилей
+const variantClasses = {
+  primary: 'bg-brand-yellow text-brand-dark hover:bg-yellow-400 focus:ring-brand-yellow',
+  secondary: 'bg-brand-gray text-white hover:bg-opacity-90 focus:ring-brand-gray',
+  outline: 'border-2 border-brand-yellow text-brand-yellow hover:bg-brand-yellow hover:text-brand-dark focus:ring-brand-yellow',
+  ghost: 'text-brand-dark dark:text-white hover:bg-brand-gray/10 focus:ring-brand-gray',
+};
+
+// Размеры
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+// Base classes
+const baseClasses = `
+  inline-flex items-center justify-center
+  font-medium rounded-lg
+  transition-all duration-200
+  focus:outline-none focus:ring-2 focus:ring-offset-2
+  disabled:opacity-50 disabled:cursor-not-allowed
+  ${fullWidth ? 'w-full' : ''}
+  ${loading ? 'cursor-wait' : ''}
+`;
+
+const variantClass = variantClasses[variant];
+const sizeClass = sizeClasses[size];
+
+const classes = `${baseClasses} ${variantClass} ${sizeClass} ${className}`;
+---
+
+{href ? (
+  <a
+    href={disabled || loading ? undefined : href}
+    class={classes}
+    aria-disabled={disabled || loading}
+    aria-label={ariaLabel}
+    role={href ? undefined : 'button'}
+  >
+    {loading && (
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    )}
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    class={classes}
+    disabled={disabled || loading}
+    aria-label={ariaLabel}
+    aria-busy={loading}
+  >
+    {loading && (
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    )}
+    <slot />
+  </button>
+)}

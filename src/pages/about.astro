@@ -1,0 +1,191 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/blocks/Hero.astro';
+import Features from '../components/blocks/Features.astro';
+import Testimonials from '../components/blocks/Testimonials.astro';
+import CTA from '../components/blocks/CTA.astro';
+import ContactsMap from '../components/blocks/ContactsMap.astro';
+
+const pageTitle = 'О компании UWS - Профессиональная установка окон в Киеве';
+const pageDescription = 'UWS - лидер по установке окон в Киеве. Более 15 лет опыта, 5000+ довольных клиентов. Немецкие профили REHAU, KBE, WDS с гарантией 5 лет.';
+
+// Company statistics
+const stats = [
+  { value: '15+', label: 'Лет опыта' },
+  { value: '5000+', label: 'Довольных клиентов' },
+  { value: '12000+', label: 'Установленных окон' },
+  { value: '5 лет', label: 'Официальной гарантии' }
+];
+
+// Team members
+const team = [
+  {
+    name: 'Алексей Смирнов',
+    position: 'Директор компании',
+    experience: '15 лет в оконной индустрии'
+  },
+  {
+    name: 'Дмитрий Коваленко',
+    position: 'Технический директор',
+    experience: 'Сертифицированный инженер'
+  },
+  {
+    name: 'Андрей Петров',
+    position: 'Руководитель монтажных бригад',
+    experience: '12 лет опыта монтажа'
+  }
+];
+
+// Partners
+const partners = [
+  { name: 'REHAU', description: 'Немецкий профиль премиум-класса' },
+  { name: 'KBE', description: 'Немецкие оконные системы' },
+  { name: 'WDS', description: 'Современные профильные системы' },
+  { name: 'Roto', description: 'Премиум фурнитура' },
+  { name: 'MACO', description: 'Австрийская фурнитура' },
+  { name: 'Siegenia', description: 'Немецкие доводчики' }
+];
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- Hero Section -->
+  <Hero
+    title="О компании UWS"
+    subtitle="Мы - лидер по установке окон в Киеве с более чем 15-летним опытом работы. Делаем качественные немецкие окна доступными для каждой семьи."
+    ctaText="Рассчитать стоимость"
+    ctaLink="/calculator"
+    variant="dark"
+  />
+
+  <!-- Stats Section -->
+  <section class="section bg-brand-dark text-white">
+    <div class="container">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <p class="text-4xl md:text-5xl font-heading font-bold text-brand-yellow mb-2">{stat.value}</p>
+            <p class="text-gray-300">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- History & Mission -->
+  <section class="section">
+    <div class="container">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">Наша история</h2>
+          <div class="space-y-4 text-gray-600 dark:text-gray-400">
+            <p>
+              Компания UWS была основана в 2008 году группой специалистов с многолетним опытом работы в оконной индустрии. 
+              Мы начинали с небольшой команды монтажников, но уже через год стали одним из лидеров рынка оконных конструкций в Киеве.
+            </p>
+            <p>
+              Наша миссия - сделать качественные немецкие окна доступными для каждой украинской семьи. 
+              Мы не экономим на материалах и всегда используем только сертифицированные профили и фурнитуру.
+            </p>
+            <p>
+              Сегодня UWS - это современная компания с собственным производством, 
+              квалифицированными монтажными бригадами и складом материалов. 
+              Мы обслуживаем более 500 клиентов в год и продолжаем расти.
+            </p>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-brand-gray to-brand-dark rounded-xl h-[400px] flex items-center justify-center">
+          <div class="text-center text-white p-8">
+            <svg class="w-24 h-24 mx-auto mb-4 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <p class="text-xl font-bold">С 2008 года</p>
+            <p class="text-gray-300">надежный партнер вашего комфорта</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <Features
+    title="Наши преимущества"
+    subtitle="Почему клиенты выбирают UWS"
+    variant="icons"
+    bgVariant="light"
+  />
+
+  <!-- Partners -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Наши партнёры</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
+          Мы работаем только с проверенными производителями оконных систем и фурнитуры
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {partners.map((partner) => (
+          <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow dark:bg-gray-800">
+            <h3 class="text-xl font-heading font-bold mb-2 dark:text-white">{partner.name}</h3>
+            <p class="text-gray-600 dark:text-gray-400">{partner.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section bg-gray-50 dark:bg-gray-900">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Наша команда</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
+          Квалифицированные специалисты с многолетним опытом работы
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {team.map((member) => (
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg dark:bg-gray-800">
+            <div class="h-64 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
+              <svg class="w-24 h-24 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-heading font-bold mb-1 dark:text-white">{member.name}</h3>
+              <p class="text-brand-yellow font-medium mb-2">{member.position}</p>
+              <p class="text-gray-600 text-sm dark:text-gray-400">{member.experience}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <Testimonials
+    title="Отзывы о работе"
+    subtitle="Что говорят наши клиенты"
+  />
+
+  <!-- CTA -->
+  <CTA
+    title="Готовы заказать окна?"
+    subtitle="Оставьте заявку и получите бесплатный замер и консультацию специалиста"
+    ctaText="Оставить заявку"
+    ctaLink="/contacts"
+    variant="gradient"
+  />
+
+  <!-- Contacts Map -->
+  <ContactsMap
+    title="Контакты"
+    showMap={true}
+  />
+</BaseLayout>

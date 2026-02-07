@@ -1,0 +1,138 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - generic [ref=e4]:
+        - link "UWS Home" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e6]: UWS
+        - generic [ref=e7]:
+          - link "Головна" [ref=e8] [cursor=pointer]:
+            - /url: /
+          - link "Послуги" [ref=e9] [cursor=pointer]:
+            - /url: /services
+          - link "Калькулятор" [ref=e10] [cursor=pointer]:
+            - /url: /calculator
+          - link "Блог" [ref=e11] [cursor=pointer]:
+            - /url: /blog
+          - link "Контакти" [ref=e12] [cursor=pointer]:
+            - /url: /contacts
+  - main [ref=e13]:
+    - main [ref=e14]:
+      - generic [ref=e17]:
+        - heading "Профессиональная установка окон" [level=1] [ref=e18]
+        - paragraph [ref=e19]: Качественные немецкие профили Rehau, KBE, WDS с гарантией 5 лет. Более 5000 довольных клиентов в Киеве и области.
+        - generic [ref=e20]:
+          - link "Рассчитать стоимость" [ref=e21] [cursor=pointer]:
+            - /url: /calculator
+          - link "Заказать звонок" [ref=e22] [cursor=pointer]:
+            - /url: /contacts
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - heading "Наши преимущества" [level=2] [ref=e26]
+          - paragraph [ref=e27]: Мы делаем качественные окна доступными для каждого
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - img [ref=e31]
+            - heading "Гарантия 5 лет" [level=3] [ref=e33]
+            - paragraph [ref=e34]: Даем официальную гарантию на все виды работ и материалов
+          - generic [ref=e35]:
+            - img [ref=e37]
+            - heading "Монтаж за 1 день" [level=3] [ref=e39]
+            - paragraph [ref=e40]: Профессиональная бригада выполнит установку в кратчайшие сроки
+          - generic [ref=e41]:
+            - img [ref=e43]
+            - heading "Честные цены" [level=3] [ref=e45]
+            - paragraph [ref=e46]: Фиксированная стоимость в договоре без скрытых платежей
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - heading "Популярные услуги" [level=2] [ref=e50]
+          - paragraph [ref=e51]: Выберите тип окон для точного расчета стоимости
+        - generic [ref=e52]:
+          - link "Окна Пластиковые окна REHAU, KBE, WDS от 2 800 ₴" [ref=e53] [cursor=pointer]:
+            - /url: /calculator?type=windows
+            - img [ref=e55]
+            - generic [ref=e57]:
+              - heading "Окна" [level=3] [ref=e58]
+              - paragraph [ref=e59]: Пластиковые окна REHAU, KBE, WDS
+              - generic [ref=e60]: от 2 800 ₴
+          - link "Балконы Остекление и отделка балконов под ключ от 12 000 ₴" [ref=e61] [cursor=pointer]:
+            - /url: /calculator?type=balcony
+            - img [ref=e63]
+            - generic [ref=e65]:
+              - heading "Балконы" [level=3] [ref=e66]
+              - paragraph [ref=e67]: Остекление и отделка балконов под ключ
+              - generic [ref=e68]: от 12 000 ₴
+          - link "Двери Входные и межкомнатные двери от 5 500 ₴" [ref=e69] [cursor=pointer]:
+            - /url: /calculator?type=doors
+            - img [ref=e71]
+            - generic [ref=e73]:
+              - heading "Двери" [level=3] [ref=e74]
+              - paragraph [ref=e75]: Входные и межкомнатные двери
+              - generic [ref=e76]: от 5 500 ₴
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - heading "Не знаете какие окна выбрать?" [level=2] [ref=e81]
+          - paragraph [ref=e82]: Оставьте заявку и наш инженер бесплатно приедет на замер, проконсультирует и поможет подобрать оптимальное решение под ваш бюджет.
+          - list [ref=e83]:
+            - listitem [ref=e84]:
+              - img [ref=e85]
+              - generic [ref=e87]: Бесплатный замер в пределах Киева
+            - listitem [ref=e88]:
+              - img [ref=e89]
+              - generic [ref=e91]: Точный расчет стоимости за 24 часа
+            - listitem [ref=e92]:
+              - img [ref=e93]
+              - generic [ref=e95]: Заключение официального договора
+        - generic [ref=e96]:
+          - heading "Оставить заявку" [level=3] [ref=e97]
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic [ref=e100]: Ваше имя
+              - textbox "Ваше имя" [ref=e101]:
+                - /placeholder: Иван
+            - generic [ref=e102]:
+              - generic [ref=e103]: Телефон
+              - textbox "Телефон" [ref=e104]:
+                - /placeholder: +38 (0__) ___-__-__
+            - button "Заказать консультацию" [ref=e105] [cursor=pointer]
+  - contentinfo [ref=e106]:
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - text: UWS
+          - paragraph [ref=e110]: Профессиональная установка окон в Киеве с 2010 года.
+        - generic [ref=e111]:
+          - heading "Послуги" [level=4] [ref=e112]
+          - list [ref=e113]:
+            - listitem [ref=e114]:
+              - link "Вікна" [ref=e115] [cursor=pointer]:
+                - /url: /services/windows
+            - listitem [ref=e116]:
+              - link "Балкони" [ref=e117] [cursor=pointer]:
+                - /url: /services/balcony
+            - listitem [ref=e118]:
+              - link "Двері" [ref=e119] [cursor=pointer]:
+                - /url: /services/doors
+        - generic [ref=e120]:
+          - heading "Компанія" [level=4] [ref=e121]
+          - list [ref=e122]:
+            - listitem [ref=e123]:
+              - link "Про нас" [ref=e124] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e125]:
+              - link "Блог" [ref=e126] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e127]:
+              - link "Контакти" [ref=e128] [cursor=pointer]:
+                - /url: /contacts
+        - generic [ref=e129]:
+          - heading "Контакти" [level=4] [ref=e130]
+          - list [ref=e131]:
+            - listitem [ref=e132]: 📍 Київ, вул. Прикладна 1
+            - listitem [ref=e133]: 📞 +38 (044) 123-45-67
+            - listitem [ref=e134]: ✉️ info@uws.com.ua
+      - paragraph [ref=e136]: © 2026 UWS. Всі права захищені.
+```

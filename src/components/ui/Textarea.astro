@@ -1,0 +1,161 @@
+---
+/**
+ * Textarea Component
+ * 
+ * Многострочное поле ввода с поддержкой счётчика символов
+ * 
+ * @example
+ * <Textarea label="Сообщение" rows={4} />
+ * <Textarea label="Комментарий" maxLength={500} showCount />
+ */
+
+interface Props {
+  /** Название поля */
+  name?: string;
+  /** Лейбл */
+  label?: string;
+  /** Placeholder */
+  placeholder?: string;
+  /** Значение */
+  value?: string;
+  /** Количество строк */
+  rows?: number;
+  /** Минимальное количество строк */
+  minRows?: number;
+  /** Максимальное количество строк */
+  maxRows?: number;
+  /** Максимальное количество символов */
+  maxLength?: number;
+  /** Показывать счётчик символов */
+  showCount?: boolean;
+  /** Обязательное поле */
+  required?: boolean;
+  /** Отключенное состояние */
+  disabled?: boolean;
+  /** Только для чтения */
+  readonly?: boolean;
+  /** Ошибка валидации */
+  error?: string;
+  /** Подсказка под полем */
+  helpText?: string;
+  /** Дополнительные классы для wrapper */
+  wrapperClass?: string;
+  /** Дополнительные классы для textarea */
+  textareaClass?: string;
+  /** ID (автогенерируется если не указан) */
+  id?: string;
+  /** Разрешить изменение размера */
+  resize?: boolean | 'none' | 'both' | 'horizontal' | 'vertical';
+}
+
+const {
+  name,
+  label,
+  placeholder,
+  value,
+  rows = 4,
+  minRows,
+  maxRows,
+  maxLength,
+  showCount = false,
+  required = false,
+  disabled = false,
+  readonly = false,
+  error,
+  helpText,
+  wrapperClass = '',
+  textareaClass = '',
+  id: providedId,
+  resize = true,
+} = Astro.props;
+
+// Генерируем ID если не предоставлен
+const id = providedId || `textarea-${name || Math.random().toString(36).substr(2, 9)}`;
+
+// Base textarea classes
+const baseTextareaClasses = `
+  block w-full rounded-lg border
+  px-4 py-3 text-brand-dark dark:text-white
+  placeholder:text-gray-400 dark:placeholder:text-gray-500
+  focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:border-transparent
+  disabled:bg-gray-100 dark:disabled:bg-gray-700
+  disabled:cursor-not-allowed
+  transition-colors duration-200
+`;
+
+// Resize classes
+const resizeClasses = {
+  true: 'resize',
+  false: 'resize-none',
+  none: 'resize-none',
+  both: 'resize-both',
+  horizontal: 'resize-x',
+  vertical: 'resize-y',
+};
+
+// Variant classes
+const textareaClasses = error
+  ? 'border-red-500 focus:ring-red-200 dark:focus:ring-red-900/30'
+  : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-brand-dark';
+
+const resizeClass = typeof resize === 'boolean' ? resizeClasses.true : resizeClasses[resize];
+const classes = `${baseTextareaClasses} ${textareaClasses} ${resizeClass} ${textareaClass}`;
+---
+
+<div class={`space-y-1 ${wrapperClass}`}>
+  {label && (
+    <label
+      for={id}
+      class="block text-sm font-medium text-brand-dark dark:text-white"
+    >
+      {label}
+      {required && <span class="text-red-500 ml-1" aria-hidden="true">*</span>}
+    </label>
+  )}
+
+  <div class="relative">
+    <textarea
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      rows={rows}
+      minlength={minRows}
+      maxlength={maxLength}
+      {required}
+      {disabled}
+      {readonly}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+      class={classes}
+    />
+
+    {/* Счётчик символов */}
+    {showCount && maxLength && (
+      <div class="absolute bottom-2 right-2">
+        <span class="text-xs text-gray-400">
+          {value?.length || 0}/{maxLength}
+        </span>
+      </div>
+    )}
+  </div>
+
+  {error && (
+    <p
+      id={`${id}-error`}
+      class="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+      role="alert"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+      {error}
+    </p>
+  )}
+
+  {helpText && !error && (
+    <p id={`${id}-help`} class="text-sm text-gray-500 dark:text-gray-400">
+      {helpText}
+    </p>
+  )}
+</div>

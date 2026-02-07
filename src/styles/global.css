@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --text-primary: #1a252b;
+        --text-secondary: #52565e;
+    }
+
+    .dark {
+        --bg-primary: #1a252b;
+        --bg-secondary: #2d3a42;
+        --text-primary: #f8f9fa;
+        --text-secondary: #ced4da;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-white text-brand-dark dark:bg-brand-dark dark:text-white antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading font-bold;
+    }
+
+    /* Focus styles for accessibility */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-brand-yellow ring-offset-2;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    .btn-primary {
+        @apply bg-brand-yellow text-brand-dark hover:bg-yellow-400 focus:ring-brand-yellow;
+    }
+
+    .btn-secondary {
+        @apply bg-brand-gray text-white hover:bg-opacity-90 focus:ring-brand-gray;
+    }
+
+    .btn-outline {
+        @apply border-2 border-brand-yellow text-brand-yellow hover:bg-brand-yellow hover:text-brand-dark focus:ring-brand-yellow;
+    }
+
+    .container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .section {
+        @apply py-12 md:py-16 lg:py-20;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.5s ease-out;
+    }
+
+    .animate-slide-in {
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        @apply text-black bg-white;
+    }
+
+    header,
+    footer {
+        display: none !important;
+    }
+}

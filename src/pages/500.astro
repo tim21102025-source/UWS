@@ -1,0 +1,106 @@
+---
+// src/pages/500.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Помилка сервера | UWS"
+  description="Вибачте, сталася помилка сервера. Спробуйте оновити сторінку або зв'яжіться з нами."
+>
+  <section class="min-h-[70vh] flex items-center justify-center bg-gray-50 dark:bg-brand-dark">
+    <div class="container">
+      <div class="text-center max-w-2xl mx-auto">
+        <!-- 500 Icon -->
+        <div class="mb-8">
+          <svg class="w-32 h-32 mx-auto text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-dark dark:text-white mb-4">
+          500
+        </h1>
+        <h2 class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-6">
+          Помилка сервера
+        </h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-8">
+          Вибачте, сталася внутрішня помилка сервера. Наша команда вже працює над вирішенням проблеми. 
+          Будь ласка, спробуйте оновити сторінку через кілька хвилин.
+        </p>
+        
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="window.location.reload()" class="btn btn-primary">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Оновити сторінку
+          </button>
+          <a href="/" class="btn btn-outline border-gray-300 dark:border-gray-600">
+            На головну
+          </a>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            Якщо проблема триває, зв'яжіться з нами:
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-6 text-sm">
+            <a 
+              href="tel:+380441234567" 
+              class="flex items-center gap-2 text-brand-yellow hover:underline"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +38 (044) 123-45-67
+            </a>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <a 
+              href="mailto:info@uws.com.ua" 
+              class="flex items-center gap-2 text-brand-yellow hover:underline"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              info@uws.com.ua
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="mt-8">
+          <nav aria-label="Popular pages">
+            <ul class="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <li>
+                <a href="/services/windows" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                  Вікна
+                </a>
+              </li>
+              <li class="text-gray-300 dark:text-gray-600">|</li>
+              <li>
+                <a href="/services/balcony" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                  Балкони
+                </a>
+              </li>
+              <li class="text-gray-300 dark:text-gray-600">|</li>
+              <li>
+                <a href="/calculator" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                  Калькулятор
+                </a>
+              </li>
+              <li class="text-gray-300 dark:text-gray-600">|</li>
+              <li>
+                <a href="/contacts" class="text-gray-500 dark:text-gray-400 hover:text-brand-yellow transition-colors">
+                  Контакти
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,89 @@
+---
+// src/components/blocks/FAQ.astro
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  faqs?: FAQItem[];
+  categories?: string[];
+}
+
+const {
+  title = 'Частые вопросы',
+  subtitle = 'Ответы на самые популярные вопросы наших клиентов',
+  faqs = [
+    {
+      question: 'Сколько времени занимает установка окон?',
+      answer: 'Установка одного окна занимает от 2 до 4 часов. Полная замена окон в квартире (2-3 комнаты) обычно выполняется за 1-2 дня. Мы всегда согласовываем сроки заранее и соблюдаем договоренности.'
+    },
+    {
+      question: 'Какой профиль лучше выбрать?',
+      answer: 'Выбор профиля зависит от ваших требований к тепло- и шумоизоляции. Для квартиры в городе рекомендуем 5-камерный профиль шириной 70мм (REHAU или KBE). Для загородного дома или северной стороны квартиры лучше выбрать 6-камерный профиль 80мм.'
+    },
+    {
+      question: 'Делаете ли вы бесплатный замер?',
+      answer: 'Да, замер в пределах Киева бесплатный. Наш инженер приедет в удобное для вас время, сделает точные замеры, проконсультирует по выбору окон и рассчитает точную стоимость.'
+    },
+    {
+      question: 'Какая гарантия на окна?',
+      answer: 'Мы предоставляем официальную гарантию 5 лет на все виды работ и материалы. Профили REHAU и KBE имеют собственную гарантию производителя до 50 лет на профиль и до 10 лет на стеклопакеты.'
+    },
+    {
+      question: 'Можно ли установить окна зимой?',
+      answer: 'Да, современные технологии позволяют устанавливать окна в любое время года. Мы используем специальные зимние монтажные материалы, которые работают при температуре до -15°C. Процесс установки занимает около 30-40 минут на одно окно, поэтому квартира не успевает охладиться.'
+    },
+    {
+      question: 'Как оплатить заказ?',
+      answer: 'Оплата производится в два этапа: 50% предоплата при заключении договора, 50% после завершения монтажа и приемки работ. Возможна оплата наличными, безналичным расчетом или через терминал.'
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="section bg-gray-50 dark:bg-gray-900">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">{title}</h2>
+      {subtitle && (
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">{subtitle}</p>
+      )}
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-4" role="list">
+        {faqs.map((faq, index) => (
+          <details 
+            class="group bg-white rounded-xl overflow-hidden shadow-lg dark:bg-gray-800"
+            role="listitem"
+          >
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+              <h3 class="text-lg font-heading font-semibold pr-4">{faq.question}</h3>
+              <svg 
+                class="w-6 h-6 text-brand-yellow transform group-open:rotate-180 transition-transform flex-shrink-0"
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 border-t dark:border-gray-700 pt-4">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="/faq" class="btn btn-outline">
+          Все вопросы
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,112 @@
+---
+/**
+ * Modal Component
+ * 
+ * Модальное окно с backdrop blur, анимациями и accessibility
+ * 
+ * @example
+ * <Modal open={showModal} onClose={() => setShowModal(false)}>
+ *   <Modal.Title>Заголовок</Modal.Title>
+ *   <Modal.Body>Контент</Modal.Body>
+ *   <Modal.Footer>Действия</Modal.Footer>
+ * </Modal>
+ */
+
+interface Props {
+  /** Открыто ли модальное окно */
+  open?: boolean;
+  /** Заголовок модального окна */
+  title?: string;
+  /** Размер модального окна */
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** Показывать кнопку закрытия */
+  showClose?: boolean;
+  /** Закрывать при клике на overlay */
+  closeOnOverlay?: boolean;
+  /** Закрывать при ESC */
+  closeOnEsc?: boolean;
+  /** Дополнительные классы */
+  class?: string;
+}
+
+const {
+  open = false,
+  title,
+  size = 'md',
+  showClose = true,
+  closeOnOverlay = true,
+  closeOnEsc = true,
+  class: className = '',
+} = Astro.props;
+
+// Размеры
+const sizeClasses = {
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-xl',
+  full: 'max-w-4xl',
+};
+
+const sizeClass = sizeClasses[size];
+---
+
+{open && (
+  <>
+    {/* Backdrop */}
+    <div
+      class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm animate-fade-in"
+      aria-hidden="true"
+    />
+
+    {/* Modal container */}
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={title ? 'modal-title' : undefined}
+    >
+      {/* Modal panel */}
+      <div
+        class={`
+          relative w-full ${sizeClass}
+          bg-white dark:bg-brand-dark
+          rounded-xl shadow-2xl
+          animate-slide-up
+          ${className}
+        `}
+      >
+        {/* Header */}
+        {(title || showClose) && (
+          <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+            {title && (
+              <h2 id="modal-title" class="text-lg font-semibold text-brand-dark dark:text-white">
+                {title}
+              </h2>
+            )}
+            
+            {showClose && (
+              <button
+                type="button"
+                class="p-1 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Закрыть"
+              >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Body */}
+        <div class="p-4">
+          <slot />
+        </div>
+
+        {/* Footer */}
+        <slot name="footer" />
+      </div>
+    </div>
+  </>
+)}

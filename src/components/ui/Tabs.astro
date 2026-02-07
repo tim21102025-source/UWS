@@ -1,0 +1,165 @@
+---
+/**
+ * Tabs Component
+ * 
+ * Компонент табов с поддержкой keyboard navigation
+ * 
+ * @example
+ * <Tabs
+ *   tabs={[
+ *     { id: 'tab1', label: 'Таб 1', content: 'Контент 1' },
+ *     { id: 'tab2', label: 'Таб 2', content: 'Контент 2' },
+ *   ]}
+ *   defaultTab="tab1"
+ * />
+ */
+
+interface Tab {
+  /** Уникальный ID таба */
+  id: string;
+  /** Лейбл таба */
+  label: string | HTMLElement;
+  /** Контент таба */
+  content: HTMLElement | string;
+  /** Отключённый таб */
+  disabled?: boolean;
+  /** Иконка таба */
+  icon?: string;
+}
+
+interface Props {
+  /** Массив табов */
+  tabs: Tab[];
+  /** Активный таб по умолчанию */
+  defaultTab?: string;
+  /** Вариант стиля */
+  variant?: 'default' | 'pills' | 'underline';
+  /** Размер табов */
+  size?: 'sm' | 'md' | 'lg';
+  /** Выравнивание */
+  align?: 'left' | 'center' | 'right';
+  /** Дополнительные классы */
+  class?: string;
+}
+
+const {
+  tabs,
+  defaultTab,
+  variant = 'underline',
+  size = 'md',
+  align = 'left',
+  class: className = '',
+} = Astro.props;
+
+const activeTab = defaultTab || tabs[0]?.id;
+
+// Варианты стилей табов
+const tabClasses = {
+  default: {
+    list: 'border-b border-gray-200 dark:border-gray-700',
+    tab: `
+      border-b-2 -mb-px
+      hover:border-brand-yellow hover:text-brand-yellow
+    `,
+    active: 'border-brand-yellow text-brand-yellow',
+    inactive: 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300',
+  },
+  pills: {
+    list: 'gap-2',
+    tab: 'rounded-lg',
+    active: 'bg-brand-yellow text-brand-dark',
+    inactive: 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700',
+  },
+  underline: {
+    list: 'border-b border-gray-200 dark:border-gray-700',
+    tab: '',
+    active: 'border-brand-yellow text-brand-yellow',
+    inactive: 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300',
+  },
+};
+
+const currentVariant = tabClasses[variant];
+
+// Размеры
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-base',
+  lg: 'px-6 py-3 text-lg',
+};
+
+const sizeClass = sizeClasses[size];
+
+// Выравнивание
+const alignClasses = {
+  left: 'justify-start',
+  center: 'justify-center',
+  right: 'justify-end',
+};
+
+const alignClass = alignClasses[align];
+---
+
+<div class={`${className}`}>
+  {/* Tab list */}
+  <div
+    role="tablist"
+    aria-label="Табы"
+    class={`
+      flex ${alignClass}
+      ${currentVariant.list}
+    `}
+  >
+    {tabs.map((tab) => {
+      const isActive = activeTab === tab.id;
+      
+      return (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${tab.id}`}
+          aria-selected={isActive}
+          aria-controls={`panel-${tab.id}`}
+          aria-disabled={tab.disabled}
+          disabled={tab.disabled}
+          tabindex={isActive ? 0 : -1}
+          class={`
+            flex items-center gap-2
+            font-medium
+            transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:ring-inset
+            ${sizeClass}
+            ${currentVariant.tab}
+            ${isActive ? currentVariant.active : currentVariant.inactive}
+            ${tab.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+          `}
+        >
+          {tab.icon && <span class="w-5 h-5" />}
+          {tab.label}
+        </button>
+      );
+    })}
+  </div>
+
+  {/* Tab panels */}
+  <div class="mt-4">
+    {tabs.map((tab) => {
+      const isActive = activeTab === tab.id;
+      
+      return (
+        <div
+          role="tabpanel"
+          id={`panel-${tab.id}`}
+          aria-labelledby={`tab-${tab.id}`}
+          aria-hidden={!isActive}
+          tabindex={isActive ? 0 : -1}
+          class={`
+            focus:outline-none
+            ${isActive ? 'block' : 'hidden'}
+          `}
+        >
+          {tab.content}
+        </div>
+      );
+    })}
+  </div>
+</div>

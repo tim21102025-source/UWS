@@ -1,0 +1,31 @@
+---
+interface Props {
+  organizationName?: string;
+  organizationUrl?: string;
+  logo?: string;
+  telephone?: string;
+}
+
+const {
+  organizationName = 'UWS — Ukrainian Window Systems',
+  organizationUrl = 'https://uws.com.ua',
+  logo = '/favicon.svg',
+  telephone = '+380660575202',
+} = Astro.props;
+
+const schema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: organizationName,
+  url: organizationUrl,
+  logo: logo,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: telephone,
+    contactType: 'customer service',
+    availableLanguage: ['Ukrainian', 'Russian'],
+  },
+}, null, 2);
+---
+
+<script type="application/ld+json" set:html={schema} />

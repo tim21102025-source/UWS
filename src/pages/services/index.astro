@@ -1,0 +1,208 @@
+---
+// src/pages/services/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/blocks/Hero.astro';
+import ServicesGrid from '../../components/blocks/ServicesGrid.astro';
+import CTA from '../../components/blocks/CTA.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+
+const pageTitle = 'Услуги UWS - Профессиональная установка и ремонт окон в Киеве';
+const pageDescription = 'Полный спектр услуг по окнам: установка, ремонт, балконы, москитные сетки, стеклопакеты, доводчики. Немецкие профили REHAU, KBE, WDS.';
+
+const services = [
+  {
+    title: 'Установка окон',
+    slug: 'ustanovka-okon',
+    category: 'Установка',
+    description: 'Профессиональная установка пластиковых окон REHAU, KBE, WDS любой сложности. Монтаж по немецкой технологии с использованием качественных материалов.',
+    price: 'от 2 800 ₴/м²',
+    features: ['Монтаж за 1 день', 'Гарантия 5 лет', 'Немецкие профили'],
+    icon: 'window'
+  },
+  {
+    title: 'Ремонт окон',
+    slug: 'remont-okon',
+    category: 'Ремонт',
+    description: 'Ремонт и регулировка окон любой сложности. Замена уплотнителей, фурнитуры, стеклопакетов. Устранение продувания и промерзания.',
+    price: 'от 500 ₴',
+    features: ['Выезд мастера бесплатно', 'Ремонт за 2-4 часа', 'Гарантия 1 год'],
+    icon: 'tools'
+  },
+  {
+    title: 'Балконы',
+    slug: 'balkony',
+    category: 'Балконы',
+    description: 'Остекление и отделка балконов под ключ. Тёплое и холодное остекление, утепление, внутренняя и внешняя отделка.',
+    price: 'от 12 000 ₴',
+    features: ['Рассрочка 0%', 'Остекление за 2 дня', 'Полный комплекс работ'],
+    icon: 'balcony'
+  },
+  {
+    title: 'Москітні сітки',
+    slug: 'moskitni-sitki',
+    category: 'Аксессуары',
+    description: 'Защита от насекомых и пыли. Антимоскитные сетки любых размеров и форм. Рамочные, рулонные, плиссе.',
+    price: 'от 800 ₴',
+    features: ['Изготовление за 1 день', 'Прочный алюминий', 'Любые размеры'],
+    icon: 'mosquito'
+  },
+  {
+    title: 'Стеклопакеты',
+    slug: 'stepklopaketi',
+    category: 'Стеклопакеты',
+    description: 'Замена и установка стеклопакетов. Однокамерные, двухкамерные, энергосберегающие, солнцезащитные.',
+    price: 'от 1 500 ₴',
+    features: ['Замена за 2 часа', 'Энергосбережение', 'Шумоизоляция'],
+    icon: 'glass'
+  },
+  {
+    title: 'Доводчики',
+    slug: 'dovodchiki',
+    category: 'Фурнитура',
+    description: 'Установка и замена дверных доводчиков. Для входных и межкомнатных дверей. Настройка и регулировка.',
+    price: 'от 1 200 ₴',
+    features: ['Европейское качество', 'Монтаж за 1 час', 'Гарантия 2 года'],
+    icon: 'door'
+  }
+];
+
+const categories = ['Все', 'Установка', 'Ремонт', 'Балконы', 'Аксессуары', 'Стеклопакеты', 'Фурнитура'];
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Hero
+    title="Наши услуги"
+    subtitle="Профессиональная установка и ремонт окон в Киеве. Полный спектр услуг для вашего комфорта."
+    ctaText="Рассчитать стоимость"
+    ctaLink="/calculator"
+    variant="dark"
+  />
+
+  <!-- Services Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">Все услуги</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
+          Выберите нужную услугу для получения подробной информации и расчета стоимости
+        </p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        {categories.map((category, index) => (
+          <button
+            class={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              index === 0 
+                ? 'bg-brand-yellow text-brand-dark' 
+                : 'bg-gray-100 text-gray-600 hover:bg-brand-yellow hover:text-brand-dark dark:bg-gray-700 dark:text-gray-300'
+            }`}
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
+        {services.map((service) => (
+          <a 
+            href={`/services/${service.slug}`}
+            class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-gray-800"
+            data-category={service.category}
+          >
+            <div class="h-48 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
+              <svg 
+                class="w-24 h-24 text-brand-yellow" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="1.5" 
+                  d={service.icon === 'window' ? 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z' :
+                      service.icon === 'tools' ? 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z' :
+                      service.icon === 'balcony' ? 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064' :
+                      service.icon === 'mosquito' ? 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11-.402-2.599-1-3-1' :
+                      service.icon === 'glass' ? 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z' :
+                      'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 17a2.5 2.5 0 0 0 2.5 2.5H20M6.5 17H20M4 6.5A2.5 2.5 0 0 1 6.5 4H20M6.5 4a2.5 2.5 0 0 0-2.5 2.5H20'}
+                />
+              </svg>
+            </div>
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 text-xs font-medium bg-brand-yellow/20 text-brand-yellow rounded-full mb-3">
+                {service.category}
+              </span>
+              <h3 class="text-xl font-heading font-bold mb-2 group-hover:text-brand-yellow transition-colors dark:text-white">
+                {service.title}
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-2 dark:text-gray-400">{service.description}</p>
+              <ul class="space-y-1 mb-4">
+                {service.features.slice(0, 2).map((feature) => (
+                  <li class="flex items-center gap-2 text-sm text-gray-500">
+                    <svg class="w-4 h-4 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <span class="inline-block text-brand-yellow font-bold">{service.price}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <FAQ
+    title="Частые вопросы об услугах"
+    subtitle="Ответы на популярные вопросы о наших услугах"
+  />
+
+  <!-- CTA -->
+  <CTA
+    title="Нужна консультация?"
+    subtitle="Наш специалист поможет подобрать оптимальное решение под ваши задачи и бюджет"
+    ctaText="Получить консультацию"
+    ctaLink="/contacts"
+    showForm={true}
+  />
+</BaseLayout>
+
+<script>
+  // Simple category filter
+  const filterButtons = document.querySelectorAll('[data-category]');
+  const serviceCards = document.querySelectorAll('[data-category]');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+      
+      // Update active button
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-brand-yellow', 'text-brand-dark');
+        btn.classList.add('bg-gray-100', 'text-gray-600', 'dark:bg-gray-700', 'dark:text-gray-300');
+      });
+      button.classList.remove('bg-gray-100', 'text-gray-600', 'dark:bg-gray-700', 'dark:text-gray-300');
+      button.classList.add('bg-brand-yellow', 'text-brand-dark');
+
+      // Filter cards
+      serviceCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'Все' || cardCategory === category) {
+          (card as HTMLElement).style.display = 'block';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

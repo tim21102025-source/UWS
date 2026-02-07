@@ -1,0 +1,160 @@
+---
+/**
+ * Select Component
+ * 
+ * Выпадающий список с поддержкой одиночного и множественного выбора
+ * 
+ * @example
+ * <Select label="Выберите услугу" options={services} />
+ * <Select label="Multiple" options={options} multiple />
+ */
+
+interface Option {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  /** Название поля */
+  name?: string;
+  /** Лейбл */
+  label?: string;
+  /** Список опций */
+  options: Option[];
+  /** Выбранное значение (для одиночного) */
+  value?: string;
+  /** Выбранные значения (для множественного) */
+  multiple?: boolean;
+  /** Значения по умолчанию (массив для multiple) */
+  values?: string[];
+  /** Обязательное поле */
+  required?: boolean;
+  /** Отключенное состояние */
+  disabled?: boolean;
+  /** Ошибка валидации */
+  error?: string;
+  /** Подсказка под полем */
+  helpText?: string;
+  /** Placeholder */
+  placeholder?: string;
+  /** Дополнительные классы для wrapper */
+  wrapperClass?: string;
+  /** Дополнительные классы для select */
+  selectClass?: string;
+  /** ID (автогенерируется если не указан) */
+  id?: string;
+}
+
+const {
+  name,
+  label,
+  options,
+  value,
+  multiple = false,
+  values,
+  required = false,
+  disabled = false,
+  error,
+  helpText,
+  placeholder = 'Выберите...',
+  wrapperClass = '',
+  selectClass = '',
+  id: providedId,
+} = Astro.props;
+
+// Генерируем ID если не предоставлен
+const id = providedId || `select-${name || Math.random().toString(36).substr(2, 9)}`;
+
+// Base select classes
+const baseSelectClasses = `
+  block w-full rounded-lg border
+  px-4 py-3 text-brand-dark dark:text-white
+  focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:border-transparent
+  disabled:bg-gray-100 dark:disabled:bg-gray-700
+  disabled:cursor-not-allowed
+  transition-colors duration-200
+`;
+
+// Variant classes
+const selectClasses = error
+  ? 'border-red-500 focus:ring-red-200 dark:focus:ring-red-900/30'
+  : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-brand-dark';
+
+const classes = `${baseSelectClasses} ${selectClasses} ${selectClass}`;
+---
+
+<div class={`space-y-1 ${wrapperClass}`}>
+  {label && (
+    <label
+      for={id}
+      class="block text-sm font-medium text-brand-dark dark:text-white"
+    >
+      {label}
+      {required && <span class="text-red-500 ml-1" aria-hidden="true">*</span>}
+    </label>
+  )}
+
+  <div class="relative">
+    <select
+      id={id}
+      name={name}
+      {required}
+      {disabled}
+      multiple={multiple}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+      class={classes}
+    >
+      {!multiple && (
+        <option value="" disabled selected>
+          {placeholder}
+        </option>
+      )}
+      
+      {options.map((option) => {
+        const isSelected = multiple
+          ? values?.includes(option.value)
+          : value === option.value;
+        
+        return (
+          <option
+            value={option.value}
+            disabled={option.disabled}
+            selected={isSelected}
+          >
+            {option.label}
+          </option>
+        );
+      })}
+    </select>
+
+    {/* Chevron icon для single select */}
+    {!multiple && (
+      <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+    )}
+  </div>
+
+  {error && (
+    <p
+      id={`${id}-error`}
+      class="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+      role="alert"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+      {error}
+    </p>
+  )}
+
+  {helpText && !error && (
+    <p id={`${id}-help`} class="text-sm text-gray-500 dark:text-gray-400">
+      {helpText}
+    </p>
+  )}
+</div>

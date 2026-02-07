@@ -1,0 +1,310 @@
+---
+// src/components/common/Header.astro
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navigation = [
+  { name: 'Головна', href: '/' },
+  { 
+    name: 'Послуги', 
+    href: '/services',
+    children: [
+      { name: 'Вікна', href: '/services/windows' },
+      { name: 'Балкони', href: '/services/balcony' },
+      { name: 'Двері', href: '/services/doors' },
+    ]
+  },
+  { name: 'Калькулятор', href: '/calculator' },
+  { name: 'Ціни', href: '/prices' },
+  { name: 'Блог', href: '/blog' },
+  { name: 'Контакти', href: '/contacts' },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') {
+    return currentPath === '/';
+  }
+  return currentPath.startsWith(href);
+};
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 dark:bg-brand-dark/95 dark:border-gray-800 transition-colors duration-300">
+  <nav class="container" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2" aria-label="UWS Home">
+        <span class="text-2xl font-heading font-bold text-brand-yellow">UWS</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-8">
+        {navigation.map((item) => (
+          item.children ? (
+            <div class="relative group">
+              <a 
+                href={item.href}
+                class="flex items-center gap-1 text-brand-dark dark:text-white hover:text-brand-yellow dark:hover:text-brand-yellow transition-colors py-2"
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.name}
+                <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <!-- Dropdown -->
+              <div class="absolute left-0 mt-1 w-48 bg-white dark:bg-brand-dark border border-gray-100 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left">
+                <ul class="py-2">
+                  {item.children.map((child) => (
+                    <li>
+                      <a 
+                        href={child.href}
+                        class="block px-4 py-2 text-sm text-brand-dark dark:text-white hover:text-brand-yellow dark:hover:text-brand-yellow hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                        aria-current={currentPath === child.href ? 'page' : undefined}
+                      >
+                        {child.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <a 
+              href={item.href}
+              class="text-brand-dark dark:text-white hover:text-brand-yellow dark:hover:text-brand-yellow transition-colors relative"
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.name}
+              {isActive(item.href) && (
+                <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-yellow" aria-hidden="true"></span>
+              )}
+            </a>
+          )
+        ))}
+      </div>
+
+      <!-- Right side actions -->
+      <div class="hidden lg:flex items-center gap-4">
+        <!-- Language Switcher -->
+        <div class="flex items-center gap-1">
+          <a 
+            href="/uk" 
+            class="px-2 py-1 text-sm font-medium rounded transition-colors"
+            class:list={[
+              currentPath.startsWith('/uk') 
+                ? 'text-brand-yellow' 
+                : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
+            ]}
+            aria-label="Українська"
+          >
+            UK
+          </a>
+          <span class="text-gray-300 dark:text-gray-600">|</span>
+          <a 
+            href="/ru" 
+            class="px-2 py-1 text-sm font-medium rounded transition-colors"
+            class:list={[
+              currentPath.startsWith('/ru') || !currentPath.startsWith('/uk')
+                ? 'text-brand-yellow' 
+                : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
+            ]}
+            aria-label="Русский"
+          >
+            RU
+          </a>
+        </div>
+
+        <!-- Theme Toggle -->
+        <ThemeToggle />
+
+        <!-- CTA Button -->
+        <a href="/contacts" class="btn btn-primary">
+          Контакти
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        type="button"
+        class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        id="mobile-menu-button"
+      >
+        <svg class="w-6 h-6 text-brand-dark dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" id="hamburger-icon" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" id="close-icon" class="hidden" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div 
+    class="lg:hidden fixed inset-0 z-40 transform translate-x-full transition-transform duration-300 ease-in-out"
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile menu"
+  >
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+    
+    <!-- Menu panel -->
+    <div class="absolute right-0 top-0 h-full w-80 max-w-[80vw] bg-white dark:bg-brand-dark shadow-xl overflow-y-auto">
+      <div class="flex flex-col h-full">
+        <!-- Mobile header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+          <span class="text-xl font-heading font-bold text-brand-yellow">UWS</span>
+          <div class="flex items-center gap-2">
+            <ThemeToggle class="p-1" />
+          </div>
+        </div>
+
+        <!-- Mobile nav -->
+        <nav class="flex-1 p-4" aria-label="Mobile navigation">
+          <ul class="space-y-2">
+            {navigation.map((item) => (
+              <li>
+                {item.children ? (
+                  <div class="mobile-dropdown">
+                    <a 
+                      href={item.href}
+                      class="flex items-center justify-between w-full px-4 py-3 text-brand-dark dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    >
+                      <span>{item.name}</span>
+                      <svg class="w-4 h-4 transition-transform mobile-dropdown-toggle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </a>
+                    <ul class="hidden mt-2 pl-4 space-y-2 border-l-2 border-gray-200 dark:border-gray-700">
+                      {item.children.map((child) => (
+                        <li>
+                          <a 
+                            href={child.href}
+                            class="block px-4 py-2 text-sm text-brand-dark dark:text-white hover:text-brand-yellow dark:hover:text-brand-yellow transition-colors"
+                          >
+                            {child.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <a 
+                    href={item.href}
+                    class="block px-4 py-3 text-brand-dark dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          <!-- Language switcher mobile -->
+          <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-center gap-4">
+              <a 
+                href="/uk"
+                class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+                class:list={[
+                  currentPath.startsWith('/uk') 
+                    ? 'bg-brand-yellow text-brand-dark' 
+                    : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
+                ]}
+              >
+                UK
+              </a>
+              <span class="text-gray-300 dark:text-gray-600">|</span>
+              <a 
+                href="/ru"
+                class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+                class:list={[
+                  currentPath.startsWith('/ru') || !currentPath.startsWith('/uk')
+                    ? 'bg-brand-yellow text-brand-dark' 
+                    : 'text-gray-600 dark:text-gray-400 hover:text-brand-yellow'
+                ]}
+              >
+                RU
+              </a>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-6">
+            <a href="/contacts" class="btn btn-primary w-full">
+              Контакти
+            </a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu functionality
+  function initMobileMenu() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (!menuButton || !mobileMenu || !backdrop) return;
+
+    const toggleMenu = () => {
+      const isOpen = !mobileMenu.classList.contains('translate-x-full');
+      
+      mobileMenu.classList.toggle('translate-x-full');
+      menuButton.setAttribute('aria-expanded', (!isOpen).toString());
+      
+      hamburgerIcon?.classList.toggle('hidden', isOpen);
+      closeIcon?.classList.toggle('hidden', !isOpen);
+      
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    };
+
+    menuButton.addEventListener('click', toggleMenu);
+    backdrop.addEventListener('click', toggleMenu);
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('translate-x-full')) {
+        toggleMenu();
+      }
+    });
+
+    // Mobile dropdown toggles
+    const dropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    dropdownToggles.forEach((toggle) => {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dropdown = toggle.closest('.mobile-dropdown');
+        const submenu = dropdown?.querySelector('ul');
+        if (submenu) {
+          submenu.classList.toggle('hidden');
+          toggle.classList.toggle('rotate-180');
+        }
+      });
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+  } else {
+    initMobileMenu();
+  }
+
+  // Re-initialize on view transitions
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>

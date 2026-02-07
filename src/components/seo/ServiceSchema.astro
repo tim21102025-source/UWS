@@ -1,0 +1,42 @@
+---
+interface Props {
+  serviceName?: string;
+  description?: string;
+  url?: string;
+  provider?: string;
+  areaServed?: string;
+  priceRange?: string;
+}
+
+const {
+  serviceName = 'Установка окон',
+  description = 'Профессиональная установка металлопластиковых окон в Киеве',
+  url = 'https://uws.com.ua/services',
+  provider = 'UWS',
+  areaServed = 'Киев',
+  priceRange = 'UAH 5000-20000',
+} = Astro.props;
+
+const schema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: serviceName,
+  description: description,
+  url: url,
+  provider: {
+    '@type': 'Organization',
+    name: provider,
+  },
+  areaServed: {
+    '@type': 'Place',
+    name: areaServed,
+  },
+  offers: {
+    '@type': 'Offer',
+    priceRange: priceRange,
+    availability: 'https://schema.org/InStock',
+  },
+}, null, 2);
+---
+
+<script type="application/ld+json" set:html={schema} />

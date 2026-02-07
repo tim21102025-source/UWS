@@ -1,0 +1,135 @@
+---
+// src/components/blocks/Features.astro
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  features?: Feature[];
+  variant?: 'cards' | 'list' | 'icons';
+  bgVariant?: 'light' | 'dark' | 'gradient';
+}
+
+const {
+  title = 'Почему выбирают нас',
+  subtitle = 'Мы делаем качественные окна доступными для каждого',
+  features = [
+    {
+      title: 'Гарантия 5 лет',
+      description: 'Даем официальную гарантию на все виды работ и материалов',
+      icon: 'shield'
+    },
+    {
+      title: 'Монтаж за 1 день',
+      description: 'Профессиональная бригада выполнит установку в кратчайшие сроки',
+      icon: 'clock'
+    },
+    {
+      title: 'Честные цены',
+      description: 'Фиксированная стоимость в договоре без скрытых платежей',
+      icon: 'money'
+    },
+    {
+      title: 'Немецкое качество',
+      description: 'Используем профили REHAU, KBE, WDS с сертификатами качества',
+      icon: 'star'
+    },
+    {
+      title: 'Бесплатный замер',
+      description: 'Наш инженер приедет в удобное для вас время и сделает точный расчет',
+      icon: 'ruler'
+    },
+    {
+      title: 'Официальный договор',
+      description: 'Заключаем договор с четкими сроками и гарантиями',
+      icon: 'document'
+    }
+  ],
+  variant = 'cards',
+  bgVariant = 'light'
+} = Astro.props;
+
+const bgClass = {
+  light: 'bg-gray-50 dark:bg-gray-900',
+  dark: 'bg-brand-dark text-white',
+  gradient: 'bg-gradient-to-br from-brand-gray to-brand-dark text-white'
+}[bgVariant];
+
+const iconMap: Record<string, string> = {
+  shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  clock: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+  money: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11-.402-2.599-1-3-1',
+  star: 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z',
+  ruler: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z',
+  document: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+};
+---
+
+<section class={`section ${bgClass}`}>
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">{title}</h2>
+      {subtitle && (
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">{subtitle}</p>
+      )}
+    </div>
+
+    {variant === 'cards' && (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {features.map((feature) => (
+          <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow dark:bg-gray-800">
+            <div class="w-12 h-12 bg-brand-yellow rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-brand-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconMap[feature.icon]} />
+              </svg>
+            </div>
+            <h3 class="text-xl font-heading font-bold mb-2 dark:text-white">{feature.title}</h3>
+            <p class="text-gray-600 dark:text-gray-400">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {variant === 'list' && (
+      <div class="max-w-3xl mx-auto">
+        <ul class="space-y-6">
+          {features.map((feature) => (
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand-yellow rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-brand-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconMap[feature.icon]} />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-heading font-bold dark:text-white">{feature.title}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{feature.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {variant === 'icons' && (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map((feature) => (
+          <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-colors">
+            <div class="w-14 h-14 bg-brand-yellow/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-7 h-7 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconMap[feature.icon]} />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-heading font-bold dark:text-white">{feature.title}</h3>
+              <p class="text-gray-600 text-sm dark:text-gray-400">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

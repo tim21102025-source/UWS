@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url?: string;
+  image?: string;
+  siteName?: string;
+  type?: 'website' | 'article';
+  locale?: string;
+}
+
+const {
+  title,
+  description,
+  url = 'https://uws.com.ua',
+  image = '/favicon.svg',
+  siteName = 'UWS',
+  type = 'website',
+  locale = 'uk_UA',
+} = Astro.props;
+---
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={image} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content={locale} />

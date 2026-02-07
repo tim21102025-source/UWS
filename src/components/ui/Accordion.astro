@@ -1,0 +1,118 @@
+---
+/**
+ * Accordion Component
+ * 
+ * Раскрывающаяся панель с поддержкой нескольких открытых элементов
+ * 
+ * @example
+ * <Accordion items={[
+ *   { title: 'Вопрос 1', content: 'Ответ 1' },
+ *   { title: 'Вопрос 2', content: 'Ответ 2' },
+ * ]} />
+ */
+
+interface AccordionItem {
+  /** Уникальный ID */
+  id: string;
+  /** Заголовок элемента */
+  title: string;
+  /** Содержимое элемента */
+  content: string | HTMLElement;
+  /** Отключённый элемент */
+  disabled?: boolean;
+}
+
+interface Props {
+  /** Массив элементов */
+  items: AccordionItem[];
+  /** Разрешить несколько открытых элементов */
+  multiple?: boolean;
+  /** Индексы открытых по умолчанию */
+  defaultOpen?: number | number[];
+  /** Вариант стиля */
+  variant?: 'default' | 'bordered';
+  /** Дополнительные классы */
+  class?: string;
+}
+
+const {
+  items,
+  multiple = false,
+  defaultOpen = [],
+  variant = 'default',
+  class: className = '',
+} = Astro.props;
+
+// Разворачиваем defaultOpen в Set для удобства
+const openItems = new Set<number>(
+  Array.isArray(defaultOpen) ? defaultOpen : [defaultOpen]
+);
+
+// Варианты стилей
+const wrapperClasses = {
+  default: 'divide-y divide-gray-200 dark:divide-gray-700',
+  bordered: 'divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-xl',
+};
+
+const wrapperClass = wrapperClasses[variant];
+---
+
+<div class={`${wrapperClass} ${className}`} role="region" aria-multiselectable={multiple}>
+  {items.map((item, index) => {
+    const isOpen = openItems.has(index);
+    const contentId = `accordion-content-${index}`;
+    const triggerId = `accordion-trigger-${index}`;
+    
+    return (
+      <div class={variant === 'bordered' ? 'first:rounded-t-xl last:rounded-b-xl' : ''}>
+        <button
+          type="button"
+          id={triggerId}
+          aria-expanded={isOpen}
+          aria-controls={contentId}
+          disabled={item.disabled}
+          class={`
+            w-full flex items-center justify-between
+            px-4 py-4 text-left
+            text-brand-dark dark:text-white
+            font-medium
+            hover:bg-gray-50 dark:hover:bg-gray-800/50
+            focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:ring-inset
+            transition-colors duration-200
+            ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}
+          `}
+        >
+          <span>{item.title}</span>
+          
+          <svg
+            class={`
+              w-5 h-5 transform transition-transform duration-200
+              ${isOpen ? 'rotate-180' : ''}
+              text-gray-500
+            `}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        <div
+          id={contentId}
+          role="region"
+          aria-labelledby={triggerId}
+          class={`
+            overflow-hidden transition-all duration-300 ease-in-out
+            ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+          `}
+        >
+          <div class="px-4 pb-4 text-gray-600 dark:text-gray-300">
+            {item.content}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>

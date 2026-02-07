@@ -1,0 +1,15 @@
+# Robots.txt for UWS - Ukrainian Window Systems
+# https://uws.com.ua
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://uws.com.ua/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/

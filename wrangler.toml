@@ -1,0 +1,33 @@
+# Cloudflare Workers Configuration
+# https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "uws-api"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Vars для продакшн
+[vars]
+ENVIRONMENT = "production"
+
+# Secrets для-sensitive данных
+# Используйте: npx wrangler secret put TELEGRAM_BOT_TOKEN
+# [secrets]
+# TELEGRAM_BOT_TOKEN = "your_bot_token"
+# TELEGRAM_CHAT_ID = "your_chat_id"
+# RESEND_API_KEY = "your_resend_key"
+
+# Routes для деплоя на определенных URL
+# [[routes]]
+# pattern = "api.uws.com.ua/*"
+# zone_name = "uws.com.ua"
+
+# KV Namespaces (для кеширования)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "your-kv-namespace-id"
+
+# D1 Database (опционально)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "uws"
+# database_id = "your-database-id"

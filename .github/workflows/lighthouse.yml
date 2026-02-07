@@ -1,0 +1,58 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Preview build
+        run: npm run preview &
+        shell: bash
+        env:
+          PORT: 4321
+
+      - name: Wait for preview server
+        run: sleep 10
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            http://localhost:4321/
+            http://localhost:4321/calculator
+            http://localhost:4321/about
+            http://localhost:4321/contacts
+          budgetPath: ./lighthouserc.json
+          uploadArtifacts: true
+
+      - name: Archive Lighthouse results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+
+      - name: Check Lighthouse scores
+        run: |
+          cat .lighthouseci/lhr-*.json | jq '[.categories.performance.score, .categories.accessibility.score, .categories.best-practices.score, .categories.seo.score]'
+          echo "Performance score: $(cat .lighthouseci/lhr-*.json | jq -r '.[0].categories.performance.score')"

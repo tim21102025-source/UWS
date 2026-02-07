@@ -1,0 +1,93 @@
+---
+// src/components/common/ThemeToggle.astro
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<button
+  type="button"
+  class={`theme-toggle ${className}`}
+  aria-label="Переключить тему"
+  title="Переключить тему"
+>
+  <span class="theme-toggle__icon theme-toggle__icon--sun">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  </span>
+  <span class="theme-toggle__icon theme-toggle__icon--moon">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+  </span>
+</button>
+
+<script is:inline>
+  // Theme Toggle functionality
+  function initThemeToggle() {
+    const toggle = document.querySelector('.theme-toggle');
+    if (!toggle) return;
+
+    // Get theme from localStorage or system preference
+    const getTheme = () => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    };
+
+    // Set theme on document
+    const setTheme = (theme) => {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      localStorage.setItem('theme', theme);
+    };
+
+    // Initialize theme
+    setTheme(getTheme());
+
+    // Toggle on click
+    toggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle);
+  } else {
+    initThemeToggle();
+  }
+
+  // Re-initialize on view transitions
+  document.addEventListener('astro:page-load', initThemeToggle);
+</script>
+
+<style>
+  .theme-toggle {
+    @apply p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-yellow;
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-yellow-400;
+  }
+
+  .theme-toggle:hover {
+    @apply bg-gray-200 dark:bg-gray-700;
+  }
+
+  .theme-toggle__icon {
+    @apply block;
+  }
+
+  .theme-toggle__icon--moon {
+    @apply hidden dark:block;
+  }
+
+  .theme-toggle__icon--sun {
+    @apply block dark:hidden;
+  }
+</style>

@@ -1,0 +1,147 @@
+---
+/**
+ * Input Component
+ * 
+ * Поле ввода с поддержкой различных типов, лейблов и валидации
+ * 
+ * @example
+ * <Input label="Имя" id="name" required />
+ * <Input type="email" label="Email" error="Некорректный email" />
+ */
+
+interface Props {
+  /** Тип input */
+  type?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'search' | 'url';
+  /** Название поля */
+  name?: string;
+  /** Лейбл */
+  label?: string;
+  /** Placeholder */
+  placeholder?: string;
+  /** Значение */
+  value?: string;
+  /** Обязательное поле */
+  required?: boolean;
+  /** Отключенное состояние */
+  disabled?: boolean;
+  /** Только для чтения */
+  readonly?: boolean;
+  /** Ошибка валидации */
+  error?: string;
+  /** Подсказка под полем */
+  helpText?: string;
+  /** Дополнительные классы для wrapper */
+  wrapperClass?: string;
+  /** Дополнительные классы для input */
+  inputClass?: string;
+  /** ID (автогенерируется если не указан) */
+  id?: string;
+  /** Автocomplete */
+  autocomplete?: string;
+  /** Минимальное значение (для number) */
+  min?: string | number;
+  /** Максимальное значение (для number) */
+  max?: string | number;
+  /** Шаг (для number) */
+  step?: string | number;
+  /** Паттерн для валидации */
+  pattern?: string;
+}
+
+const {
+  type = 'text',
+  name,
+  label,
+  placeholder,
+  value,
+  required = false,
+  disabled = false,
+  readonly = false,
+  error,
+  helpText,
+  wrapperClass = '',
+  inputClass = '',
+  id: providedId,
+  autocomplete,
+  min,
+  max,
+  step,
+  pattern,
+} = Astro.props;
+
+// Генерируем ID если не предоставлен
+const id = providedId || `input-${name || Math.random().toString(36).substr(2, 9)}`;
+
+// Base input classes
+const baseInputClasses = `
+  block w-full rounded-lg border
+  px-4 py-3 text-brand-dark dark:text-white
+  placeholder:text-gray-400 dark:placeholder:text-gray-500
+  focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:border-transparent
+  disabled:bg-gray-100 dark:disabled:bg-gray-700
+  disabled:cursor-not-allowed
+  transition-colors duration-200
+`;
+
+// Variant classes
+const inputClasses = error
+  ? 'border-red-500 focus:ring-red-200 dark:focus:ring-red-900/30'
+  : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-brand-dark';
+
+const classes = `${baseInputClasses} ${inputClasses} ${inputClass}`;
+---
+
+<div class={`space-y-1 ${wrapperClass}`}>
+  {label && (
+    <label
+      for={id}
+      class="block text-sm font-medium text-brand-dark dark:text-white"
+    >
+      {label}
+      {required && <span class="text-red-500 ml-1" aria-hidden="true">*</span>}
+    </label>
+  )}
+
+  <div class="relative">
+    <input
+      type={type}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      required={required}
+      disabled={disabled}
+      readonly={readonly}
+      autocomplete={autocomplete}
+      min={min}
+      max={max}
+      step={step}
+      pattern={pattern}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
+      class={classes}
+    />
+    
+    {/* Слот для иконки справа */}
+    <slot name="icon-right" />
+  </div>
+
+  {error && (
+    <p
+      id={`${id}-error`}
+      class="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+      role="alert"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+      {error}
+    </p>
+  )}
+
+  {helpText && !error && (
+    <p id={`${id}-help`} class="text-sm text-gray-500 dark:text-gray-400">
+      {helpText}
+    </p>
+  )}
+</div>

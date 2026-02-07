@@ -1,0 +1,126 @@
+---
+// src/components/blocks/ServicesGrid.astro
+interface Service {
+  title: string;
+  description: string;
+  price: string;
+  icon: string;
+  link: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  services?: Service[];
+  columns?: 2 | 3 | 4;
+}
+
+const {
+  title = 'Наши услуги',
+  subtitle = 'Профессиональные услуги по установке и ремонту окон',
+  services = [
+    {
+      title: 'Установка окон',
+      description: 'Профессиональная установка пластиковых окон REHAU, KBE, WDS',
+      price: 'от 2 800 ₴/м²',
+      icon: 'window',
+      link: '/services/ustanovka-okon'
+    },
+    {
+      title: 'Ремонт окон',
+      description: 'Ремонт и регулировка окон любой сложности',
+      price: 'от 500 ₴',
+      icon: 'tools',
+      link: '/services/remont-okon'
+    },
+    {
+      title: 'Балконы',
+      description: 'Остекление и отделка балконов под ключ',
+      price: 'от 12 000 ₴',
+      icon: 'balcony',
+      link: '/services/balkony'
+    },
+    {
+      title: 'Москітні сітки',
+      description: 'Защита от насекомых и пыли',
+      price: 'от 800 ₴',
+      icon: 'mosquito',
+      link: '/services/moskitni-sitki'
+    },
+    {
+      title: 'Стеклопакеты',
+      description: 'Замена и установка стеклопакетов',
+      price: 'от 1 500 ₴',
+      icon: 'glass',
+      link: '/services/stepklopaketi'
+    },
+    {
+      title: 'Доводчики',
+      description: 'Установка дверных доводчиков',
+      price: 'от 1 200 ₴',
+      icon: 'door',
+      link: '/services/dovodchiki'
+    }
+  ],
+  columns = 3
+} = Astro.props;
+
+const gridCols = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-2 lg:grid-cols-3',
+  4: 'md:grid-cols-2 lg:grid-cols-4'
+}[columns];
+
+const iconMap: Record<string, string> = {
+  window: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z',
+  tools: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+  balcony: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064',
+  mosquito: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11-.402-2.599-1-3-1',
+  glass: 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z',
+  door: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 17a2.5 2.5 0 0 0 2.5 2.5H20M6.5 17H20M4 6.5A2.5 2.5 0 0 1 6.5 4H20M6.5 4a2.5 2.5 0 0 0-2.5 2.5H20'
+};
+---
+
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">{title}</h2>
+      {subtitle && (
+        <p class="text-gray-600 max-w-2xl mx-auto dark:text-gray-400">{subtitle}</p>
+      )}
+    </div>
+
+    <div class={`grid ${gridCols} gap-6`}>
+      {services.map((service) => (
+        <a 
+          href={service.link}
+          class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-gray-800"
+        >
+          <div class="h-48 bg-gradient-to-br from-brand-gray to-brand-dark flex items-center justify-center">
+            <svg 
+              class="w-24 h-24 text-brand-yellow" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="1.5" 
+                d={iconMap[service.icon]} 
+              />
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-heading font-bold mb-2 group-hover:text-brand-yellow transition-colors dark:text-white">
+              {service.title}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">{service.description}</p>
+            <span class="inline-block mt-4 text-brand-yellow font-medium">{service.price}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,59 @@
+---
+/**
+ * Card Component
+ * 
+ * Базовый карточный контейнер с различными вариантами и эффектами
+ * 
+ * @example
+ * <Card>
+ *   <Card.Header>Заголовок</Card.Header>
+ *   <Card.Body>Контент</Card.Body>
+ *   <Card.Footer>Футер</Card.Footer>
+ * </Card>
+ * 
+ * <Card variant="elevated" hover="lift">
+ *   Контент карточки
+ * </Card>
+ */
+
+interface Props {
+  /** Вариант стиля */
+  variant?: 'default' | 'bordered' | 'elevated';
+  /** Hover эффект */
+  hover?: 'none' | 'lift' | 'scale';
+  /** Дополнительные классы */
+  class?: string;
+  /** ID для анимаций */
+  id?: string;
+}
+
+const {
+  variant = 'default',
+  hover = 'none',
+  class: className = '',
+  id,
+} = Astro.props;
+
+// Варианты стилей
+const variantClasses = {
+  default: 'bg-white dark:bg-brand-dark border border-gray-200 dark:border-gray-700',
+  bordered: 'bg-white dark:bg-brand-dark border-2 border-brand-yellow',
+  elevated: 'bg-white dark:bg-brand-dark shadow-lg dark:shadow-xl',
+};
+
+// Hover эффекты
+const hoverClasses = {
+  none: '',
+  lift: 'transition-transform duration-300 hover:-translate-y-1',
+  scale: 'transition-transform duration-300 hover:scale-[1.02]',
+};
+
+const variantClass = variantClasses[variant];
+const hoverClass = hoverClasses[hover];
+
+const classes = `rounded-xl ${variantClass} ${hoverClass} ${className}`;
+---
+
+<div id={id} class={classes}>
+  <slot />
+</div>

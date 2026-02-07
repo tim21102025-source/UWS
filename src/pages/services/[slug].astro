@@ -1,0 +1,312 @@
+---
+// src/pages/services/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/blocks/Hero.astro';
+import Features from '../../components/blocks/Features.astro';
+import CTA from '../../components/blocks/CTA.astro';
+import FAQ from '../../components/blocks/FAQ.astro';
+import ContactsMap from '../../components/blocks/ContactsMap.astro';
+
+export function getStaticPaths() {
+  const services = [
+    {
+      slug: 'ustanovka-okon',
+      title: 'Установка окон',
+      description: 'Профессиональная установка пластиковых окон REHAU, KBE, WDS в Киеве. Качественный монтаж с гарантией 5 лет.',
+      price: 'от 2 800 ₴/м²',
+      fullDescription: 'Установка окон — это основная услуга нашей компании. Мы устанавливаем пластиковые окна из профилей REHAU, KBE и WDS, которые являются лидерами рынка оконных систем. Наши монтажные бригады имеют многолетний опыт работы и проходят регулярное обучение новым технологиям монтажа.',
+      features: [
+        { title: 'Немецкие профили', description: 'REHAU, KBE, WDS с сертификатами качества' },
+        { title: 'Монтаж за 1 день', description: 'Опытная бригада выполнит установку быстро и качественно' },
+        { title: 'Гарантия 5 лет', description: 'Официальная гарантия на все виды работ' },
+        { title: 'Чистая работа', description: 'Уборка мусора после монтажа включена в стоимость' }
+      ],
+      steps: [
+        { number: 1, title: 'Замер', description: 'Бесплатный выезд замерщика в удобное время' },
+        { number: 2, title: 'Договор', description: 'Заключение официального договора' },
+        { number: 3, title: 'Производство', description: 'Изготовление окон на собственном производстве' },
+        { number: 4, title: 'Монтаж', description: 'Профессиональная установка бригадой монтажников' }
+      ],
+      faqs: [
+        { question: 'Сколько времени занимает установка?', answer: 'Установка одного окна занимает 2-4 часа. Квартира с 3 окнами устанавливается за 1 день.' },
+        { question: 'Можно ли установить окна зимой?', answer: 'Да, мы используем зимние монтажные материалы, которые работают до -15°C.' },
+        { question: 'Включена ли доставка?', answer: 'Да, доставка и подъём на этаж включены в стоимость.' }
+      ],
+      relatedServices: ['remont-okon', 'stepklopaketi', 'moskitni-sitki']
+    },
+    {
+      slug: 'remont-okon',
+      title: 'Ремонт окон',
+      description: 'Ремонт и регулировка окон любой сложности в Киеве. Быстрое устранение неисправностей с гарантией.',
+      price: 'от 500 ₴',
+      fullDescription: 'Ремонт окон — это услуга, которая помогает продлить срок службы ваших окон и устранить различные неисправности. Мы ремонтируем окна любых производителей и брендов. Наши мастера быстро диагностируют проблему и предлагают оптимальное решение.',
+      features: [
+        { title: 'Выезд бесплатно', description: 'Мастер приедет бесплатно для диагностики' },
+        { title: 'Ремонт от 2 часов', description: 'Большинство работ выполняется в день обращения' },
+        { title: 'Гарантия 1 год', description: 'Гарантия на все виды ремонтных работ' },
+        { title: 'Оригинальные запчасти', description: 'Используем только качественные комплектующие' }
+      ],
+      steps: [
+        { number: 1, title: 'Вызов мастера', description: 'Бесплатный выезд и диагностика' },
+        { number: 2, title: 'Согласование', description: 'Обсуждение объёма работ и стоимости' },
+        { number: 3, title: 'Ремонт', description: 'Выполнение ремонтных работ' },
+        { number: 4, title: 'Приёмка', description: 'Проверка работоспособности и гарантия' }
+      ],
+      faqs: [
+        { question: 'Что чаще всего ломается?', answer: 'Чаще всего требуется замена уплотнителей, регулировка фурнитуры, замена ручек.' },
+        { question: 'Сколько стоит вызов мастера?', answer: 'Вызов мастера для диагностики бесплатен.' },
+        { question: 'Работаете ли с алюминиевыми окнами?', answer: 'Да, мы ремонтируем окна из ПВХ, алюминия и дерева.' }
+      ],
+      relatedServices: ['ustanovka-okon', 'stepklopaketi', 'dovodchiki']
+    },
+    {
+      slug: 'balkony',
+      title: 'Балконы',
+      description: 'Остекление и отделка балконов под ключ в Киеве. Тёплое и холодное остекление, утепление, внутренняя отделка.',
+      price: 'от 12 000 ₴',
+      fullDescription: 'Балкон — это дополнительное пространство в вашей квартире, которое можно использовать с пользой. Мы предлагаем полный комплекс услуг по остеклению и отделке балконов под ключ. Работаем с алюминиевыми и ПВХ системами, а также выполняем утепление и внутреннюю отделку.',
+      features: [
+        { title: 'Тёплое и холодное', description: 'Выбор системы под ваши задачи и бюджет' },
+        { title: 'Рассрочка 0%', description: 'Возможность оплаты частями до 12 месяцев' },
+        { title: 'Полный комплекс', description: 'От остекления до финишной отделки' },
+        { title: '2 дня монтажа', description: 'Быстрая установка без потери качества' }
+      ],
+      steps: [
+        { number: 1, title: 'Замер', description: 'Бесплатный замер и консультация' },
+        { number: 2, title: 'Проект', description: 'Разработка дизайн-проекта и расчёт стоимости' },
+        { number: 3, title: 'Производство', description: 'Изготовление конструкций' },
+        { number: 4, title: 'Монтаж', description: 'Установка и отделка под ключ' }
+      ],
+      faqs: [
+        { question: 'Какое остекление лучше?', answer: 'Для тёплого балкона — ПВХ системы, для холодного — алюминиевые.' },
+        { question: 'Нужно ли разрешение?', answer: 'Для остекления балкона разрешение не требуется.' },
+        { question: 'Сколько стоит утепление?', answer: 'Стоимость утепления зависит от выбранных материалов.' }
+      ],
+      relatedServices: ['ustanovka-okon', 'moskitni-sitki', 'stepklopaketi']
+    },
+    {
+      slug: 'moskitni-sitki',
+      title: 'Москітні сітки',
+      description: 'Антимоскитные сетки на окна и двери в Киеве. Рамочные, рулонные, плиссе с быстрой доставкой.',
+      price: 'от 800 ₴',
+      fullDescription: 'Москітні сітки — это эффективная защита от насекомых, пыли и пуха в тёплое время года. Мы изготавливаем сетки любых размеров и форм: рамочные, рулонные, плиссе. Используем прочный алюминиевый профиль и качественное полотно.',
+      features: [
+        { title: '1 день изготовление', description: 'Быстрое производство под ваш размер' },
+        { title: 'Прочный алюминий', description: 'Антикоррозийный профиль долговечен' },
+        { title: 'Любые размеры', description: 'Изготовление нестандартных конструкций' },
+        { title: '4 типа сеток', description: 'Рамочные, рулонные, плиссе, на двери' }
+      ],
+      steps: [
+        { number: 1, title: 'Замер', description: 'Точный замер оконных проёмов' },
+        { number: 2, title: 'Производство', description: 'Изготовление сеток по размерам' },
+        { number: 3, title: 'Доставка', description: 'Доставка на объект' },
+        { number: 4, title: 'Монтаж', description: 'Установка и проверка' }
+      ],
+      faqs: [
+        { question: 'Какое полотно лучше?', answer: 'Стандартное полотно серого цвета — оптимальный выбор.' },
+        { question: 'Можно ли стирать сетку?', answer: 'Да, сетку можно снять и помыть водой.' },
+        { question: 'Подходят ли сетки на все окна?', answer: 'Мы изготавливаем сетки под любые типы окон.' }
+      ],
+      relatedServices: ['ustanovka-okon', 'balkony', 'remont-okon']
+    },
+    {
+      slug: 'stepklopaketi',
+      title: 'Стеклопакеты',
+      description: 'Замена и установка стеклопакетов в Киеве. Однокамерные, двухкамерные, энергосберегающие.',
+      price: 'от 1 500 ₴',
+      fullDescription: 'Стеклопакет — это основной элемент окна, отвечающий за тепло- и звукоизоляцию. Мы предлагаем замену стеклопакетов любой сложности: от простой замены до установки энергосберегающих и солнцезащитных стёкол.',
+      features: [
+        { title: 'Замена за 2 часа', description: 'Быстрая замена без демонтажа окна' },
+        { title: 'Энергосбережение', description: 'Снижение теплопотерь до 40%' },
+        { title: 'Шумоизоляция', description: 'Снижение шума до 40 дБ' },
+        { title: 'Гарантия', description: 'Официальная гарантия на стеклопакеты' }
+      ],
+      steps: [
+        { number: 1, title: 'Замер', description: 'Точный замер стеклопакета' },
+        { number: 2, title: 'Производство', description: 'Изготовление нового стеклопакета' },
+        { number: 3, title: 'Замена', description: 'Демонтаж старого и установка нового' },
+        { number: 4, title: 'Проверка', description: 'Проверка герметичности и работы' }
+      ],
+      faqs: [
+        { question: 'Чем отличается 1-камерный от 2-камерного?', answer: '2-камерный имеет лучшую теплоизоляцию.' },
+        { question: 'Что такое энергосберегающее стекло?', answer: 'Это стекло с низкоэмиссионным покрытием.' },
+        { question: 'Можно ли заменить стекло в старом окне?', answer: 'Да, если профиль в хорошем состоянии.' }
+      ],
+      relatedServices: ['remont-okon', 'ustanovka-okon', 'dovodchiki']
+    },
+    {
+      slug: 'dovodchiki',
+      title: 'Доводчики',
+      description: 'Установка и замена дверных доводчиков в Киеве. Для входных и межкомнатных дверей, настройка.',
+      price: 'от 1 200 ₴',
+      fullDescription: 'Дверные доводчики — это устройства, которые обеспечивают плавное и контролируемое закрывание дверей. Мы устанавливаем доводчики на входные и межкомнатные двери из ПВХ, алюминия и металла. Предлагаем продукцию ведущих европейских производителей.',
+      features: [
+        { title: 'Европейское качество', description: 'Roto, Siegenia, Dorma' },
+        { title: 'Монтаж за 1 час', description: 'Быстрая установка' },
+        { title: 'Гарантия 2 года', description: 'Официальная гарантия' },
+        { title: 'Настройка', description: 'Регулировка скорости и усилия' }
+      ],
+      steps: [
+        { number: 1, title: 'Выбор', description: 'Помощь в выборе доводчика' },
+        { number: 2, title: 'Закупка', description: 'Приобретение качественного доводчика' },
+        { number: 3, title: 'Монтаж', description: 'Профессиональная установка' },
+        { number: 4, title: 'Настройка', description: 'Регулировка под вашу дверь' }
+      ],
+      faqs: [
+        { question: 'Какой доводчик выбрать?', answer: 'Выбор зависит от веса и размера двери.' },
+        { question: 'Можно ли отремонтировать старый?', answer: 'В некоторых случаях — да, если не сломаны детали.' },
+        { question: 'Как часто нужно обслуживать?', answer: 'Рекомендуем проверку раз в год.' }
+      ],
+      relatedServices: ['remont-okon', 'ustanovka-okon', 'balkony']
+    }
+  ];
+
+  return services.map(service => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  description: service.description,
+  provider: {
+    '@type': 'Organization',
+    name: 'UWS'
+  },
+  offers: {
+    '@type': 'Offer',
+    price: service.price.replace(/[^\d.]/g, ''),
+    priceCurrency: 'UAH'
+  }
+};
+---
+
+<BaseLayout 
+  title={`${service.title} - Услуги UWS`}
+  description={service.description}
+  schema={schema}
+>
+  <Hero
+    title={service.title}
+    subtitle={service.description}
+    ctaText="Рассчитать стоимость"
+    ctaLink="/calculator"
+    secondaryText="Заказать звонок"
+    secondaryLink="/contacts"
+    variant="dark"
+  />
+
+  <!-- Price -->
+  <section class="section">
+    <div class="container">
+      <div class="bg-white rounded-xl p-8 shadow-lg max-w-md dark:bg-gray-800">
+        <p class="text-sm text-gray-500 mb-2">Стоимость услуги</p>
+        <p class="text-4xl font-heading font-bold text-brand-yellow">{service.price}</p>
+        <p class="text-gray-600 mt-2 dark:text-gray-400">Точная цена после замера</p>
+        <a href="/calculator" class="btn btn-primary w-full mt-4">
+          Рассчитать точную стоимость
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="section bg-gray-50 dark:bg-gray-900">
+    <div class="container">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-heading font-bold mb-6">Описание услуги</h2>
+        <p class="text-gray-600 text-lg leading-relaxed dark:text-gray-400">
+          {service.fullDescription}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-2xl md:text-3xl font-heading font-bold mb-8 text-center">Преимущества</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {service.features.map((feature) => (
+          <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-lg dark:bg-gray-800">
+            <div class="w-10 h-10 bg-brand-yellow/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold mb-1 dark:text-white">{feature.title}</h3>
+              <p class="text-gray-600 dark:text-gray-400">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="section bg-brand-dark text-white">
+    <div class="container">
+      <h2 class="text-2xl md:text-3xl font-heading font-bold mb-8 text-center">Этапы работы</h2>
+      <div class="grid md:grid-cols-4 gap-6">
+        {service.steps.map((step, index) => (
+          <div class="text-center">
+            <div class="w-16 h-16 bg-brand-yellow text-brand-dark rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              {step.number}
+            </div>
+            <h3 class="font-heading font-bold mb-2">{step.title}</h3>
+            <p class="text-gray-300 text-sm">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-2xl md:text-3xl font-heading font-bold mb-8 text-center">Частые вопросы</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        {service.faqs.map((faq) => (
+          <details class="group bg-white rounded-xl overflow-hidden shadow-lg dark:bg-gray-800">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+              <h3 class="text-lg font-semibold pr-4">{faq.question}</h3>
+              <svg 
+                class="w-6 h-6 text-brand-yellow transform group-open:rotate-180 transition-transform flex-shrink-0"
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 dark:text-gray-400 border-t dark:border-gray-700 pt-4">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTA
+    title={`Заказать ${service.title.toLowerCase()}`}
+    subtitle="Оставьте заявку и получите бесплатный замер и консультацию"
+    ctaText="Оставить заявку"
+    ctaLink="/contacts"
+    showForm={true}
+  />
+
+  <!-- Contacts -->
+  <ContactsMap
+    title="Контакты"
+    showMap={true}
+  />
+</BaseLayout>
