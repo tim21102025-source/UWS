@@ -1,0 +1,90 @@
+---
+// Google Analytics 4 tracking component
+// Add to BaseLayout before closing </head> tag
+
+interface Props {
+  measurementId?: string;
+}
+
+const { measurementId = import.meta.env.GOOGLE_ANALYTICS_ID || 'G-XXXXXXXXXX' } = Astro.props;
+
+// Only render in production
+const isProduction = import.meta.env.PROD;
+---
+
+{isProduction && (
+  <>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=measurementId"></script>
+    <script define:vars={{ measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', measurementId, {
+        page_path: window.location.pathname,
+        send_page_view: true,
+        cookie_flags: 'SameSite=None;Secure'
+      });
+    </script>
+
+    <!-- Enhanced measurement events -->
+    <script is:inline>
+      // Track outbound links
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (link && link.hostname !== window.location.hostname) {
+          gtag('event', 'click', {
+            event_category: 'Outbound Link',
+            event_label: link.href,
+            transport_type: 'beacon'
+          });
+        }
+      });
+
+      // Track form submissions
+      document.addEventListener('submit', function(e) {
+        const form = e.target;
+        if (form) {
+          gtag('event', 'generate_lead', {
+            event_category: 'Form',
+            event_label: form.id || form.className || 'Unknown Form'
+          });
+        }
+      });
+
+      // Track scroll depth
+      let scrollDepth = 0;
+      document.addEventListener('scroll', function() {
+        const scrollPercent = Math.round(
+          (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100
+        );
+        if (scrollPercent >= 50 && scrollDepth < 50) {
+          scrollDepth = 50;
+          gtag('event', 'scroll', {
+            event_category: 'Engagement',
+            event_label: '50% Scroll Depth'
+          });
+        } else if (scrollPercent >= 75 && scrollDepth < 75) {
+          scrollDepth = 75;
+          gtag('event', 'scroll', {
+            event_category: 'Engagement',
+            event_label: '75% Scroll Depth'
+          });
+        } else if (scrollPercent >= 100 && scrollDepth < 100) {
+          scrollDepth = 100;
+          gtag('event', 'scroll', {
+            event_category: 'Engagement',
+            event_label: '100% Scroll Depth'
+          });
+        }
+      }, { passive: true });
+    </script>
+  </>
+)}
+
+{!isProduction && (
+  <!-- GA4 debug mode in development -->
+  <script is:inline>
+    console.log('GA4: Development mode - tracking disabled');
+  </script>
+)}

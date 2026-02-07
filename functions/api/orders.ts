@@ -1,167 +1,233 @@
-// Cloudflare Worker API для работы с заявками в Supabase
-// Разместить в functions/api/orders.ts
+// Orders API endpoint for UWS
+// Saves orders to Supabase and optionally sends to Telegram
 
-interface Order {
-  id?: string;
-  created_at?: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_email?: string;
-  service: string;
+interface OrderData {
+  name: string;
+  phone: string;
+  email?: string;
+  service?: string;
   message?: string;
-  address?: string;
-  status: 'new' | 'processed' | 'completed' | 'cancelled';
+  windowType?: string;
+  windowWidth?: number;
+  windowHeight?: number;
+  quantity?: number;
   source?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
 }
 
-interface Env {
-  SUPABASE_URL: string;
-  SUPABASE_KEY: string;
+interface SupabaseConfig {
+  url: string;
+  key: string;
 }
 
-// GET - Получение списка заявок
-export async function onRequestGet(request: Request, env: Env): Promise<Response> {
+export async function onRequestPost(context: { request: Request; env: Record<string, string> }) {
   try {
-    const url = new URL(request.url);
-    const status = url.searchParams.get('status') || 'new';
-    const limit = parseInt(url.searchParams.get('limit') || '50');
-    const offset = parseInt(url.searchParams.get('offset') || '0');
-
-    const response = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/orders?status=eq.${status}&order=created_at.desc&limit=${limit}&offset=${offset}`,
-      {
-        headers: {
-          'apikey': env.SUPABASE_KEY,
-          'Authorization': `Bearer ${env.SUPABASE_KEY}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch orders');
+    const { request, env } = context;
+    
+    // Check Supabase configuration
+    const SUPABASE_URL = env.SUPABASE_URL;
+    const SUPABASE_KEY = env.SUPABASE_KEY;
+    
+    if (!SUPABASE_URL || !SUPABASE_KEY) {
+      return new Response(JSON.stringify({
+        error: 'Supabase configuration missing',
+        message: 'Please set SUPABASE_URL and SUPABASE_KEY environment variables'
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const orders = await response.json();
-    return new Response(JSON.stringify(orders), {
-      headers: { 'Content-Type': 'application/json' },
+    // Parse request body
+    const orderData: OrderData = await request.json();
+    
+    if (!orderData.name || !orderData.phone) {
+      return new Response(JSON.stringify({
+        error: 'Missing required fields',
+        message: 'Name and phone are required'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Prepare order record
+    const order = {
+      name: orderData.name,
+      phone: orderData.phone,
+      email: orderData.email || null,
+      service: orderData.service || null,
+      message: orderData.message || null,
+      window_type: orderData.windowType || null,
+      window_width: orderData.windowWidth || null,
+      window_height: orderData.windowHeight || null,
+      quantity: orderData.quantity || null,
+      source: orderData.source || 'website',
+      utm_source: orderData.utm_source || null,
+      utm_medium: orderData.utm_medium || null,
+      utm_campaign: orderData.utm_campaign || null,
+      status: 'new',
+      created_at: new Date().toISOString(),
+    };
+
+    // Save to Supabase
+    const supabaseResponse = await saveToSupabase(order, { url: SUPABASE_URL, key: SUPABASE_KEY });
+
+    if (!supabaseResponse.ok) {
+      console.error('Supabase error:', supabaseResponse);
+      return new Response(JSON.stringify({
+        error: 'Failed to save order',
+        details: supabaseResponse
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Optionally send to Telegram
+    const telegramSent = await sendToTelegram(orderData, env);
+
+    return new Response(JSON.stringify({
+      success: true,
+      orderId: supabaseResponse.data?.id,
+      telegramNotified: telegramSent
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
     });
+
   } catch (error) {
-    console.error('Error fetching orders:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to fetch orders' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.error('Orders API error:', error);
+    return new Response(JSON.stringify({
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
 
-// POST - Создание новой заявки
-export async function onRequestPost(request: Request, env: Env): Promise<Response> {
+async function saveToSupabase(
+  order: Record<string, unknown>,
+  config: SupabaseConfig
+): Promise<{ ok: boolean; data?: { id: number }; error?: string }> {
   try {
-    const order: Order = await request.json();
-
-    // Валидация
-    if (!order.customer_name || !order.customer_phone || !order.service) {
-      return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const response = await fetch(`${env.SUPABASE_URL}/rest/v1/orders`, {
+    const response = await fetch(`${config.url}/rest/v1/orders`, {
       method: 'POST',
       headers: {
-        'apikey': env.SUPABASE_KEY,
-        'Authorization': `Bearer ${env.SUPABASE_KEY}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
+        'apikey': config.key,
+        'Authorization': `Bearer ${config.key}`,
+        'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        customer_name: order.customer_name,
-        customer_phone: order.customer_phone,
-        customer_email: order.customer_email,
-        service: order.service,
-        message: order.message,
-        address: order.address,
-        status: 'new',
-        source: order.source || 'website',
-      }),
+      body: JSON.stringify(order)
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Supabase error:', errorText);
-      throw new Error('Failed to create order');
+      return { ok: false, error: errorText };
     }
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    // Get the order ID from Location header
+    const location = response.headers.get('Location');
+    const orderId = location ? parseInt(location.split('/').pop() || '0') : 0;
+
+    return { ok: true, data: { id: orderId } };
   } catch (error) {
-    console.error('Error creating order:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to create order' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    return { 
+      ok: false, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    };
   }
 }
 
-// PATCH - Обновление статуса заявки
-export async function onRequestPatch(request: Request, env: Env): Promise<Response> {
+async function sendToTelegram(
+  orderData: OrderData, 
+  env: Record<string, string>
+): Promise<boolean> {
+  const TELEGRAM_BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
+  const TELEGRAM_CHAT_ID = env.TELEGRAM_CHAT_ID;
+
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.warn('Telegram not configured, skipping notification');
+    return false;
+  }
+
+  const message = formatTelegramMessage(orderData);
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
   try {
-    const url = new URL(request.url);
-    const orderId = url.searchParams.get('id');
-
-    if (!orderId) {
-      return new Response(
-        JSON.stringify({ error: 'Order ID required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const updates = await request.json();
-
-    const response = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'apikey': env.SUPABASE_KEY,
-          'Authorization': `Bearer ${env.SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updates),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Failed to update order');
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
+    const response = await fetch(url, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
     });
+    return response.ok;
   } catch (error) {
-    console.error('Error updating order:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to update order' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.error('Telegram notification failed:', error);
+    return false;
   }
 }
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const method = request.method;
+function formatTelegramMessage(order: OrderData): string {
+  const lines = [
+    '📩 <b>Новая заявка с UWS</b>',
+    '━━━━━━━━━━━━━━━━',
+    `👤 <b>Имя:</b> ${escapeHtml(order.name)}`,
+    `📞 <b>Телефон:</b> ${escapeHtml(order.phone)}`,
+  ];
 
-    switch (method) {
-      case 'GET':
-        return onRequestGet(request, env);
-      case 'POST':
-        return onRequestPost(request, env);
-      case 'PATCH':
-        return onRequestPatch(request, env);
-      default:
-        return new Response('Method not allowed', { status: 405 });
+  if (order.email) lines.push(`📧 <b>Email:</b> ${escapeHtml(order.email)}`);
+  if (order.service) lines.push(`🔧 <b>Услуга:</b> ${escapeHtml(order.service)}`);
+  
+  if (order.windowType || order.windowWidth || order.windowHeight) {
+    lines.push('');
+    lines.push('🪟 <b>Параметры:</b>');
+    if (order.windowType) lines.push(`   • Тип: ${escapeHtml(order.windowType)}`);
+    if (order.windowWidth) lines.push(`   • Ширина: ${order.windowWidth} мм`);
+    if (order.windowHeight) lines.push(`   • Высота: ${order.windowHeight} мм`);
+    if (order.quantity) lines.push(`   • Количество: ${order.quantity}`);
+  }
+
+  if (order.message) {
+    lines.push('');
+    lines.push(`💬 <b>Сообщение:</b>`);
+    lines.push(escapeHtml(order.message));
+  }
+
+  lines.push('');
+  lines.push(`🕐 ${new Date().toLocaleString('ru-RU')}`);
+
+  return lines.join('\n');
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, '&#039;');
+}
+
+export async function GET() {
+  return new Response(JSON.stringify({
+    service: 'UWS Orders API',
+    status: 'active',
+    methods: ['POST'],
+    schema: {
+      required: ['name', 'phone'],
+      optional: ['email', 'service', 'message', 'windowType', 'windowWidth', 'windowHeight', 'quantity']
     }
-  },
-};
+  }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}

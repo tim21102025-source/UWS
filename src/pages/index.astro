@@ -4,12 +4,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/blocks/Hero.astro';
 import Features from '../components/blocks/Features.astro';
 import ServicesGrid from '../components/blocks/ServicesGrid.astro';
-import Testimonials from '../components/blocks/Testimonials.astro';
 import CTA from '../components/blocks/CTA.astro';
-import FAQ from '../components/blocks/FAQ.astro';
 
-// Base path for GitHub Pages subdirectory
-const BASE_PATH = '/UWS';
+// React Components
+import TestimonialsCarousel from '../components/interactive/TestimonialsCarousel';
+import FAQAccordion from '../components/interactive/FAQAccordion';
+import LiveChat from '../components/interactive/LiveChat';
+import { SAMPLE_TESTIMONIALS, WINDOW_FAQ_ITEMS } from '../components/interactive';
+
+// Dynamic base path from Astro configuration
+const BASE_PATH = import.meta.env.BASE_PATH || '';
 
 const pageTitle = 'UWS - Профессиональная установка окон в Киеве';
 const pageDescription = 'Качественные немецкие профили REHAU, KBE, WDS с гарантией 5 лет. Более 5000 довольных клиентов в Киеве и области.';
@@ -41,15 +45,33 @@ const pageDescription = 'Качественные немецкие профил�
     columns={3}
   />
 
-  <Testimonials
-    title="Отзывы клиентов"
-    subtitle="Более 5000 довольных клиентов в Киеве и области"
-  />
+  <!-- React Testimonials Carousel -->
+  <section class="py-16 bg-dark-50">
+    <div class="container mx-auto px-4">
+      <TestimonialsCarousel
+        client:visible
+        testimonials={SAMPLE_TESTIMONIALS}
+        title="Отзывы клиентов"
+        subtitle="Более 5000 довольных клиентов в Киеве и области"
+        variant="cards"
+        visibleCount={3}
+        showDots={true}
+      />
+    </div>
+  </section>
 
-  <FAQ
-    title="Частые вопросы"
-    subtitle="Ответы на самые популярные вопросы наших клиентов"
-  />
+  <!-- React FAQ Accordion -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <FAQAccordion
+        client:visible
+        items={WINDOW_FAQ_ITEMS}
+        title="Частые вопросы"
+        subtitle="Ответы на самые популярные вопросы наших клиентов"
+        variant="default"
+      />
+    </div>
+  </section>
 
   <CTA
     title="Не знаете какие окна выбрать?"
@@ -57,5 +79,12 @@ const pageDescription = 'Качественные немецкие профил�
     ctaText="Оставить заявку"
     ctaLink={BASE_PATH + '/contacts'}
     showForm={true}
+  />
+
+  <!-- Live Chat Widget -->
+  <LiveChat
+    client:idle
+    title="UWS Консультант"
+    subtitle="Онлайн"
   />
 </BaseLayout>

@@ -10,6 +10,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
+import GoogleAnalytics from '../components/seo/GoogleAnalytics.astro';
 
 interface Props {
   title: string;
@@ -114,7 +115,14 @@ const combinedSchema = schema || organizationSchema;
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="uk_UA" />
     
-    <!-- Twitter -->
+    <!-- Security Meta Tags -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://uws.com.ua https://www.google-analytics.com;" />
+    <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=()" />
+    
+    <!-- Google Analytics -->
+    <GoogleAnalytics />
+    
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />

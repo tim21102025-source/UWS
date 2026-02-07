@@ -1,33 +1,38 @@
-# Cloudflare Workers Configuration
-# https://developers.cloudflare.com/workers/wrangler/configuration/
-
 name = "uws-api"
 compatibility_date = "2024-01-01"
+
+# Pages project configuration
+[pages]
+project_name = "uws"
 compatibility_flags = ["nodejs_compat"]
 
-# Vars для продакшн
+# Routes for API endpoints
+# Uncomment and configure for custom domain
+# [[pages.custom_domains]]
+#   domain_name = "api.uws.com.ua"
+#   zone_name = "uws.com.ua"
+
 [vars]
 ENVIRONMENT = "production"
 
-# Secrets для-sensitive данных
-# Используйте: npx wrangler secret put TELEGRAM_BOT_TOKEN
-# [secrets]
-# TELEGRAM_BOT_TOKEN = "your_bot_token"
-# TELEGRAM_CHAT_ID = "your_chat_id"
-# RESEND_API_KEY = "your_resend_key"
+# Supabase configuration secret keys (set in Cloudflare dashboard)
+# These are not set here for security - set them in Pages Settings -> Environment variables
 
-# Routes для деплоя на определенных URL
-# [[routes]]
-# pattern = "api.uws.com.ua/*"
-# zone_name = "uws.com.ua"
+# CORS headers for API
+[[headers]]
+for = "/api/*"
+[headers.values]
+Access-Control-Allow-Origin = "https://uws.com.ua"
+Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+Access-Control-Allow-Headers = "Content-Type"
+Access-Control-Max-Age = "86400"
 
-# KV Namespaces (для кеширования)
-# [[kv_namespaces]]
-# binding = "CACHE"
-# id = "your-kv-namespace-id"
-
-# D1 Database (опционально)
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "uws"
-# database_id = "your-database-id"
+# Cache control for static assets
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
