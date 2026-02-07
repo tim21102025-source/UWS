@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перенаправлення | UWS</title>
+    <script>
+        // Get the current path after the domain
+        var path = window.location.pathname;
+        var basePath = '/UWS';
+
+        // If the path doesn't start with /UWS, redirect to the correct URL
+        if (path.indexOf(basePath) !== 0) {
+            var newPath = basePath + path;
+            window.location.replace(newPath + window.location.search);
+        }
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=/UWS/">
+    </noscript>
+</head>
+
+<body>
+    <p>Якщо ви не були перенаправлені, <a href="/UWS/">натисніть тут</a>.</p>
+</body>
+
+</html>

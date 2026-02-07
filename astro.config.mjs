@@ -10,8 +10,8 @@ export default defineConfig({
     // Для SSR деплоя на Cloudflare Workers раскомментировать:
     // keystatic(),
   ],
-  site: 'https://tim21102025-source.github.io',
-  base: '/UWS/',
+  site: 'https://tim21102025-source.github.io/UWS',
+  base: '/UWS',
   trailingSlash: 'never',
   build: {
     format: 'file',
