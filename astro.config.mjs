@@ -6,15 +6,11 @@ export default defineConfig({
   integrations: [
     react(),
     tailwind(),
-    // Keystatic отключен для статического деплоя на GitHub Pages
-    // Для SSR деплоя на Cloudflare Workers раскомментировать:
-    // keystatic(),
   ],
-  site: 'https://tim21102025-source.github.io/UWS',
-  base: '/UWS',
-  trailingSlash: 'never',
+  site: 'https://tim21102025-source.github.io',
+  trailingSlash: 'always',
   build: {
-    format: 'file',
+    format: 'directory',
     assets: 'assets',
   },
   prefetch: {
